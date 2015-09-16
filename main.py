@@ -6,7 +6,7 @@ twitter = TwitterWrapper()
 a = 1
 def job():
     global a
-    twitter.update_status("Que dia EXPLENDIDO %d" % a)
+    twitter.update_status(status = "Que dia EXPLENDIDO %d" % a)
     a += 1
 
 def main():
