@@ -10,10 +10,11 @@ def job():
     a += 1
 
 def main():
-    schedule.every(1).minutes.do(job)
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    job()
+    #schedule.every(1).minutes.do(job)
+    #while True:
+    #    schedule.run_pending()
+    #    time.sleep(1)
 
 if __name__ == "__main__":
     main()
