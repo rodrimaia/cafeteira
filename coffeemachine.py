@@ -1,16 +1,15 @@
-import RPi.GPIO as GPIO
+from gpiocrust import  Header, OutputPin
 
 class CoffeeMachine:
-    relayPin = 13
+    relay = OutputPin(13)
 
     def __init__(self):
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.relayPin, GPIO.OUT)
+        Header()
 
     def start(self):
-        GPIO.output(self.relayPin, True)
+        self.relay.value = True
 
     def stop(self):
-        GPIO.output(self.relayPin, False)
+        self.relay.value = False
 
 
