@@ -1,10 +1,10 @@
 from gpiocrust import  Header, OutputPin
 
 class CoffeeMachine:
-    relay = OutputPin(13)
 
     def __init__(self):
-        Header()
+	self.header = Header()
+        self.relay = OutputPin(13)
 
     def start(self):
         self.relay.value = True
