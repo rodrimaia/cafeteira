@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+import os
+import sys
+
+from coffee.job import CoffeeJob
+
+def main():
+    if os.geteuid() != 0:
+        print "Try to run as Superuser."
+        print "e.g.: sudo " + sys.argv[0]
+        exit(1)
+
+    cj = CoffeeJob()
+    cj.start()
+
+if __name__ == "__main__":
+    main()

@@ -1,21 +1,17 @@
 from unittest import TestCase, main
-from mock import patch, call
+from machine import CoffeeMachine
 
-from coffeemachine import CoffeeMachine
-
-import pdb
-
-class CoffeeMachineTest(TestCase):
+class CoffeeMachineTests(TestCase):
 
     def test_start(self):
         cm = CoffeeMachine()
         cm.start()
-        assert cm.relay.value
+        self.assertTrue(cm.relay.value)
 
     def test_stop(self):
         cm = CoffeeMachine()
         cm.stop()
-        assert cm.relay.value == False
+        self.assertFalse(cm.relay.value)
 
 
 if __name__ == "__main__":
