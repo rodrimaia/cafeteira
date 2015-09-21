@@ -2,12 +2,15 @@ import time
 import schedule
 
 from machine import CoffeeMachine
-from twitter import TwitterWrapper
+from twitter import CoffeeTwitter
 
 class CoffeeJob:
+    TIMER = 15
+    INTERVAL = 30
 
     def __init__(self):
         self.state = None
+        self.twitter = CoffeeTwitter()
 
     def start(self):
         print "Starting the CoffeeJob... "
@@ -18,6 +21,12 @@ class CoffeeJob:
         while self.state:
             print self.cm.state
             time.sleep(1)
+            self.tweet()
+            self.cm.start()
+            time.sleep(60*self.TIMER)
+            self.cm.stop()
+            time.sleep(60*self.INTERVAL)
+            
 
     def stop(self):
         print "Stopping the CoffeeJob... "
