@@ -20,7 +20,7 @@ class CoffeeTwitter(object):
     def tweet(self):
         now = datetime.now()
         status = self.get_status()
-        self.twitter.update_status(status = status % (now.hour, now.minute)
+        self.twitter.update_status(status = status % (now.hour, now.minute))
 
     def get_status(self):
         TWEETS = [

@@ -27,6 +27,8 @@ class CoffeeJob:
             self.cm.stop()
             time.sleep(60*self.INTERVAL)
             
+    def tweet(self):
+        pass
 
     def stop(self):
         print "Stopping the CoffeeJob... "
