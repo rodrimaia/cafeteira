@@ -19,7 +19,7 @@ class CoffeeJob:
         self.state = True
 
         self.twitter.tweet()
-        self.start()
+        self.cm.start()
         time.sleep(60*self.TIMER)
         self.stop()
 
