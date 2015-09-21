@@ -16,7 +16,7 @@ class CoffeeJob:
 
     def start(self):
         print "Starting the CoffeeJob... "
-        self.state = True
+        self.cm.state = True
 
         self.twitter.tweet()
         self.cm.start()
@@ -30,7 +30,7 @@ class CoffeeJob:
 
     def stop(self):
         print "Stopping the CoffeeJob... "
-        self.state = False
+        self.cm.state = False
 
     def stop_callback(self, pin):
         print "PANIC BUTTON PRESSED!"
