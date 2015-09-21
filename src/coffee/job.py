@@ -11,11 +11,11 @@ class CoffeeJob:
     def __init__(self):
         self.state = None
         self.twitter = CoffeeTwitter()
+        self.cm = CoffeeMachine()
+        self.cm.register_button(self.stop_callback)
 
     def start(self):
         print "Starting the CoffeeJob... "
-        self.cm = CoffeeMachine()
-        self.cm.register_button(self.stop_callback)
         self.state = True
 
         self.twitter.tweet()
