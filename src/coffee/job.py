@@ -23,7 +23,9 @@ class CoffeeJob:
         time.sleep(60*self.TIMER)
         self.stop()
 
+        print "Keeping coffe hot"
         for i in range(0, self.INTERVAL):
+            time.sleep(60)
             self.cm.start()
             time.sleep(60)
             self.cm.stop()
