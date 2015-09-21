@@ -1,4 +1,4 @@
-from gpiocrust import  Header, OutputPin, InputPin
+import RPi.GPIO as GPIO
 
 class CoffeeMachine:
 
@@ -7,18 +7,19 @@ class CoffeeMachine:
     state = None
 
     def __init__(self):
-	self.header = Header()
-        self.relay = OutputPin(self.RELAY_PIN)
+	GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(self.RELAY_PIN, GPIO.OUT)
+        GPIO.setup(self.BUTTON_PIN, GPIO.IN)
         self.stop()
 
     def start(self):
-        self.relay.value = True
+        GPIO.output(self.RELAY_PIN, True)
         self.state = True
 
     def stop(self):
-        self.relay.value = False
+        GPIO.output(self.RELAY_PIN, False)
         self.state = False
 
     def register_button(self, callback):
-        self.button = InputPin(self.BUTTON_PIN, callback=callback, bouncetime=1200)
+        GPIO.add_event_detect(self.BUTTON_PIN, GPIO.RISING, callback=callback, bouncetime=800)
         print "Button registered"
