@@ -30,3 +30,10 @@ class CoffeeTwitter(object):
 
         return TWEETS[int(random()*len(TWEETS))]
 
+    def tweet_panic(self):
+        now = datetime.now()
+        status = self.get_status_panic()
+        self.twitter.update_status(status = status % (now.hour, now.minute))
+
+    def get_status_panic(self):
+        return "Olá, agora são %d hora(s) e %d minuto(s), deu treta na cafeteira, voltamos em alguns minutos!"
