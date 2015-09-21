@@ -21,14 +21,11 @@ class CoffeeJob:
         while self.state:
             print self.cm.state
             time.sleep(1)
-            self.tweet()
+            self.twitter.tweet()
             self.cm.start()
             time.sleep(60*self.TIMER)
             self.cm.stop()
             time.sleep(60*self.INTERVAL)
-            
-    def tweet(self):
-        pass
 
     def stop(self):
         print "Stopping the CoffeeJob... "
