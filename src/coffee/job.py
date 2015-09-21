@@ -32,6 +32,10 @@ class CoffeeJob:
         self.state = False
 
     def stop_callback(self, pin):
-        print "Stoping"
         print "PANIC BUTTON PRESSED!"
-        self.cm.stop()
+        if(self.cm.state):
+            print "Stoping"
+            self.cm.stop()
+        else:
+            print "Starting"
+            self.cm.start()
