@@ -19,8 +19,8 @@ class CoffeeJob:
         self.cm.state = True
         self.twitter.tweet()
         self.cm.start()
-
-        while self.cm.state || countador < 60:
+        countador = 0
+        while self.cm.state or countador < 60:
                 time.sleep(1) 
 
         self.keep_coffee_hot()
@@ -29,11 +29,11 @@ class CoffeeJob:
         print "Keeping coffe hot"
         contador = 0
         for i in range(0, self.INTERVAL):
-            while self.cm.state || countador < 60:
+            while self.cm.state or countador < 60:
                 time.sleep(1) 
             self.cm.start()
             contador = 0
-            while self.cm.state || countador < 60:
+            while self.cm.state or countador < 60:
                 time.sleep(1)
             self.cm.stop()
 
