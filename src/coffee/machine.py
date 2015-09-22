@@ -20,6 +20,6 @@ class CoffeeMachine:
         GPIO.output(self.RELAY_PIN, False)
         self.state = False
 
-    def register_button(self, callback):
-        GPIO.add_event_detect(self.BUTTON_PIN, GPIO.RISING, callback=callback, bouncetime=800)
+    def register_button(self, action_button):
+        GPIO.add_event_detect(self.BUTTON_PIN, GPIO.RISING, callback=action_button, bouncetime=1200)
         print "Button registered"

@@ -38,9 +38,9 @@ class CoffeeJob:
     def stop_callback(self, pin):
         print "PANIC BUTTON PRESSED!"
         if(self.cm.state):
-            print "Stoping"
+            print "Stoping button"
             self.twitter.tweet_panic()
             self.stop()
         else:
-            print "Starting"
+            print "Starting button"
             self.start()

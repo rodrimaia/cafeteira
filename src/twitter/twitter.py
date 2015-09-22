@@ -3,11 +3,13 @@
 from datetime import datetime
 from random import random
 from twython import Twython
-import credentials
+from credentials import *
+
+twitter_ative = True
 
 class TwitterWrapper(Twython):
     def __init__(self):
-        super(TwitterWrapper, self).__init__(credentials.APP_KEY, credentials.APP_SECRET, credentials.ACCESS_TOKEN,ACCESS_SECRET)
+        super(TwitterWrapper, self).__init__(APP_KEY, APP_SECRET, ACCESS_TOKEN,ACCESS_SECRET)
 
 class CoffeeTwitter(object):
     
@@ -15,9 +17,10 @@ class CoffeeTwitter(object):
         self.twitter = TwitterWrapper()
 
     def tweet(self):
-        now = datetime.now()
-        status = self.get_status()
-        self.twitter.update_status(status = status % (now.hour, now.minute))
+        if (self.twitter_ative)
+            now = datetime.now()
+            status = self.get_status()
+            self.twitter.update_status(status = status % (now.hour, now.minute))
 
     def get_status(self):
         TWEETS = [
@@ -28,9 +31,10 @@ class CoffeeTwitter(object):
         return TWEETS[int(random()*len(TWEETS))]
 
     def tweet_panic(self):
-        now = datetime.now()
-        status = self.get_status_panic()
-        self.twitter.update_status(status = status % (now.hour, now.minute))
+        if (self.twitter_ative)
+            now = datetime.now()
+            status = self.get_status_panic()
+            self.twitter.update_status(status = status % (now.hour, now.minute))
 
     def get_status_panic(self):
         return "Olá, agora são %d hora(s) e %d minuto(s), deu treta na cafeteira, voltamos em alguns minutos!"
