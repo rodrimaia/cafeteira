@@ -13,21 +13,28 @@ class CoffeeJob:
         self.twitter = CoffeeTwitter()
         self.cm = CoffeeMachine()
         self.cm.register_button(self.stop_callback)
-
+     
     def start(self):
         print "Starting the CoffeeJob... "
         self.cm.state = True
-
         self.twitter.tweet()
         self.cm.start()
-        time.sleep(60*self.TIMER)
-        self.stop()
 
+        while self.cm.state || countador < 60:
+                time.sleep(1) 
+
+        self.keep_coffee_hot()
+
+    def keep_coffee_hot(self):
         print "Keeping coffe hot"
+        contador = 0
         for i in range(0, self.INTERVAL):
-            time.sleep(60)
+            while self.cm.state || countador < 60:
+                time.sleep(1) 
             self.cm.start()
-            time.sleep(60)
+            contador = 0
+            while self.cm.state || countador < 60:
+                time.sleep(1)
             self.cm.stop()
 
     def stop(self):
@@ -35,7 +42,7 @@ class CoffeeJob:
         self.cm.state = False
         self.cm.stop()
 
-    def stop_callback(self, pin):
+    def stop_callback(self):
         print "PANIC BUTTON PRESSED!"
         if(self.cm.state):
             print "Stoping button"

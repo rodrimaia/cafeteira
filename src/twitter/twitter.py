@@ -5,19 +5,20 @@ from random import random
 from twython import Twython
 from credentials import *
 
-twitter_ative = True
-
 class TwitterWrapper(Twython):
     def __init__(self):
-        super(TwitterWrapper, self).__init__(APP_KEY, APP_SECRET, ACCESS_TOKEN,ACCESS_SECRET)
+        super(TwitterWrapper, self).__init__(APP_KEY, APP_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
 
 class CoffeeTwitter(object):
-    
+    #ativa twitter
+    TWITTER_ACTIVE = True
+
     def __init__(self):
-        self.twitter = TwitterWrapper()
+        if self.TWITTER_ACTIVE:
+            self.twitter = TwitterWrapper()
 
     def tweet(self):
-        if (self.twitter_ative)
+        if self.TWITTER_ACTIVE:
             now = datetime.now()
             status = self.get_status()
             self.twitter.update_status(status = status % (now.hour, now.minute))
@@ -31,7 +32,7 @@ class CoffeeTwitter(object):
         return TWEETS[int(random()*len(TWEETS))]
 
     def tweet_panic(self):
-        if (self.twitter_ative)
+        if self.TWITTER_ACTIVE:
             now = datetime.now()
             status = self.get_status_panic()
             self.twitter.update_status(status = status % (now.hour, now.minute))

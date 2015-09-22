@@ -7,7 +7,7 @@ class CoffeeMachine:
     state = None
 
     def __init__(self):
-	GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.RELAY_PIN, GPIO.OUT)
         GPIO.setup(self.BUTTON_PIN, GPIO.IN)
         self.stop()
