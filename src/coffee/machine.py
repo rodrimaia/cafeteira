@@ -9,16 +9,19 @@ class CoffeeMachine:
     def __init__(self):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.RELAY_PIN, GPIO.OUT)
-        GPIO.setup(self.BUTTON_PIN, GPIO.IN)
+        GPIO.setup(self.BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
         self.stop()
 
     def start(self):
-        GPIO.output(self.RELAY_PIN, True)
         self.state = True
+        change_state_pin()
 
     def stop(self):
-        GPIO.output(self.RELAY_PIN, False)
         self.state = False
+        change_state_pin()
+
+    def change_state_pin(self):
+        GPIO.output(self.RELAY_PIN, self.state)
 
     def register_button(self, action_button):
         GPIO.add_event_detect(self.BUTTON_PIN, GPIO.RISING, callback=action_button, bouncetime=1200)
