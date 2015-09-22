@@ -2,7 +2,7 @@ import time
 import schedule
 
 from machine import CoffeeMachine
-from twitter import CoffeeTwitter
+from twitter.twitter import CoffeeTwitter
 
 class CoffeeJob:
     TIMER = 15
