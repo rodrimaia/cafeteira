@@ -24,7 +24,7 @@ class CoffeeJob:
         self.twitter.tweet()
         self.cm.start()
         count = 0
-        while self.cm.state or count < (60*INTERVAL):
+        while self.cm.state or count < (60*self.INTERVAL):
             time.sleep(1)
             count+=1
         keep_coffee_hot()
@@ -50,5 +50,5 @@ class CoffeeJob:
             self.twitter.tweet_panic()
             self.stop()
         else:
-            print "Starting button"
+            print "Starting make coffe again"
             self.start()
