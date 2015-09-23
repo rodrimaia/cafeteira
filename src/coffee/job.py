@@ -22,7 +22,7 @@ class CoffeeJob:
             if self.read_schedule():
                 print "Starting the CoffeeJob... "
                 self.make_coffee()
-            time.sleep(60)
+            time.sleep(50)
         
     def make_coffee(self):
         print "Start make coffee"
