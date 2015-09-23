@@ -16,25 +16,27 @@ class CoffeeJob:
      
     def start(self):
         print "Starting the CoffeeJob... "
-        self.cm.state = True
+        self.make_coffee()
+        self.keep_coffee_hot()
+
+    def make_coffee(self):
+        print "Start make coffee"
         self.twitter.tweet()
         self.cm.start()
-        countador = 0
-        while self.cm.state or countador < 60:
-                time.sleep(1) 
+        count = 0
+        while self.cm.state or count < (60*INTERVAL):
+            time.sleep(1)
+            count+=1
+        keep_coffee_hot()
 
-        self.keep_coffee_hot()
 
     def keep_coffee_hot(self):
         print "Keeping coffe hot"
-        contador = 0
+        count = 0
         for i in range(0, self.INTERVAL):
-            while self.cm.state or countador < 60:
-                time.sleep(1) 
+            time.sleep(60)
             self.cm.start()
-            contador = 0
-            while self.cm.state or countador < 60:
-                time.sleep(1)
+            time.sleep(60)
             self.cm.stop()
 
     def stop(self):

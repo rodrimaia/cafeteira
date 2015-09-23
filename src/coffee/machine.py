@@ -14,11 +14,11 @@ class CoffeeMachine:
 
     def start(self):
         self.state = True
-        change_state_pin()
+        self.change_state_pin()
 
     def stop(self):
         self.state = False
-        change_state_pin()
+        self.change_state_pin()
 
     def change_state_pin(self):
         GPIO.output(self.RELAY_PIN, self.state)
