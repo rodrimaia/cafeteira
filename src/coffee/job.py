@@ -38,7 +38,7 @@ class CoffeeJob:
     def read_schedule(self):
         now = datetime.now()
         lines = [line.rstrip() for line in open("schedule_coffee.txt")]
-        time_temp = str(now.hour) + ":" + str(now.minute)
+        time_temp = "%02d:%02d" % (now.hour, now.minute)
         return time_temp in lines
 
     def keep_coffee_hot(self):
