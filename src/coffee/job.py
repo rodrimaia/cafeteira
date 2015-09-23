@@ -11,15 +11,18 @@ class CoffeeJob:
 
     def __init__(self):
         self.state = None
-        now = datetime.now()
         self.twitter = CoffeeTwitter()
         self.cm = CoffeeMachine()
         self.cm.register_button(self.stop_callback)
      
     def start(self):
-        print "Starting the CoffeeJob... "
-        self.read_schedule()
-        self.make_coffee()
+        while True:
+            print "verifica calendario"
+            print self.read_schedule()
+            if self.read_schedule():
+                print "Starting the CoffeeJob... "
+                self.make_coffee()
+            time.sleep(60)
         
 
     def make_coffee(self):
@@ -33,11 +36,10 @@ class CoffeeJob:
         keep_coffee_hot()
 
    def read_schedule(self):
+        now = datetime.now()
         lines = [line.rstrip() for line in open("schedule_coffee.txt")]
-        print lines
-        print '09:00' in lines
-        print now.hour 
-        print now.minute
+        time_temp = str(now.hour) + ":" + str(now.minute)
+        return time_temp in lines
 
     def keep_coffee_hot(self):
         print "Keeping coffe hot"
