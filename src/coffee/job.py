@@ -24,7 +24,6 @@ class CoffeeJob:
                 self.make_coffee()
             time.sleep(60)
         
-
     def make_coffee(self):
         print "Start make coffee"
         self.twitter.tweet()
@@ -35,7 +34,8 @@ class CoffeeJob:
             count+=1
         keep_coffee_hot()
 
-   def read_schedule(self):
+    
+    def read_schedule(self):
         now = datetime.now()
         lines = [line.rstrip() for line in open("schedule_coffee.txt")]
         time_temp = str(now.hour) + ":" + str(now.minute)
