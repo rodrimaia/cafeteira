@@ -3,6 +3,7 @@ import schedule
 
 from machine import CoffeeMachine
 from twitter.twitter import CoffeeTwitter
+from datetime import datetime
 
 class CoffeeJob:
     TIMER = 15
@@ -10,6 +11,7 @@ class CoffeeJob:
 
     def __init__(self):
         self.state = None
+        now = datetime.now()
         self.twitter = CoffeeTwitter()
         self.cm = CoffeeMachine()
         self.cm.register_button(self.stop_callback)
@@ -30,13 +32,12 @@ class CoffeeJob:
             count+=1
         keep_coffee_hot()
 
-    def read_schedule(self):
-        file_schedule = open("schedule_coffee.txt")
-        try:
-            for line in file_schedule:
-                print line,
-        finally:
-            file_schedule.close()
+   def read_schedule(self):
+        lines = [line.rstrip() for line in open("schedule_coffee.txt")]
+        print lines
+        print '09:00' in lines
+        print now.hour 
+        print now.minute
 
     def keep_coffee_hot(self):
         print "Keeping coffe hot"
