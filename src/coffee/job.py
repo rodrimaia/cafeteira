@@ -16,8 +16,9 @@ class CoffeeJob:
      
     def start(self):
         print "Starting the CoffeeJob... "
+        self.read_schedule()
         self.make_coffee()
-        self.keep_coffee_hot()
+        
 
     def make_coffee(self):
         print "Start make coffee"
@@ -29,6 +30,13 @@ class CoffeeJob:
             count+=1
         keep_coffee_hot()
 
+    def read_schedule(self):
+        file_schedule = open("schedule_coffee.txt")
+        try:
+            for line in file_schedule:
+                print line,
+        finally:
+            file_schedule.close()
 
     def keep_coffee_hot(self):
         print "Keeping coffe hot"
@@ -51,4 +59,4 @@ class CoffeeJob:
             self.stop()
         else:
             print "Starting make coffe again"
-            self.start()
+            self.make_coffee()
