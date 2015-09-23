@@ -29,10 +29,10 @@ class CoffeeJob:
         self.twitter.tweet()
         self.cm.start()
         count = 0
-        while self.cm.state or count < (60*self.INTERVAL):
+        while count < (60*self.INTERVAL):
             time.sleep(1)
             count+=1
-        keep_coffee_hot()
+        self.keep_coffee_hot()
 
     
     def read_schedule(self):
@@ -43,11 +43,12 @@ class CoffeeJob:
 
     def keep_coffee_hot(self):
         print "Keeping coffe hot"
-        for i in range(0, self.INTERVAL):
-            time.sleep(60)
-            self.cm.start()
-            time.sleep(60)
-            self.cm.stop()
+        if self.cm.state:
+            for i in range(0, self.INTERVAL):
+                time.sleep(60)
+                self.cm.start()
+                time.sleep(60)
+                self.cm.stop()
 
     def stop(self):
         print "Stopping the CoffeeJob... "
