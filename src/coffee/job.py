@@ -32,7 +32,6 @@ class CoffeeJob:
 
     def keep_coffee_hot(self):
         print "Keeping coffe hot"
-        count = 0
         for i in range(0, self.INTERVAL):
             time.sleep(60)
             self.cm.start()
@@ -44,7 +43,7 @@ class CoffeeJob:
         self.cm.state = False
         self.cm.stop()
 
-    def stop_callback(self):
+    def stop_callback(self, pin):
         print "PANIC BUTTON PRESSED!"
         if(self.cm.state):
             print "Stoping button"
