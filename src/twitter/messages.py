@@ -1,4 +1,4 @@
-#!-*- conding: utf8 -*-
+# -*- coding: utf-8 -*-
 
 class MessagesTwitter(object):
 	def get_message_making_coffee(self):
