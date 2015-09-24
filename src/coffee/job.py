@@ -16,30 +16,24 @@ class CoffeeJob:
         self.cm = CoffeeMachine()
         self.cm.stop()
         self.cm.register_button(self.stop_callback)
-        self.state = True
+        self.state = False
      
     def start(self):
         while True:
-            print "verifica estado da cafeteira"
-            if self.state:
-                print "verifica calendario"
-                print self.read_schedule()
-                if self.read_schedule():
-                    print "Starting the CoffeeJob... "
-                    self.make_coffee()
-                time.sleep(50)
+            print "verifica calendario"
+            print self.read_schedule()
+            if self.read_schedule() or self.state:
+                print "Starting the CoffeeJob... "
+                self.make_coffee()
+            time.sleep(50)
         
     def make_coffee(self):
         print "Start make coffee"
-        self.twitter.tweet()
+        #self.twitter.tweet()
         self.cm.start()
-        count = 0
-        while count < (60*self.INTERVAL):
-            time.sleep(1)
-            count+=1
+        time.sleep(60*self.INTERVAL)       
         self.keep_coffee_hot()
-        self.state = True
-
+        self.state = False
     
     def read_schedule(self):
         now = datetime.now()
@@ -52,22 +46,22 @@ class CoffeeJob:
         if self.cm.state:
             for i in range(0, self.INTERVAL):
                 time.sleep(60)
-                self.cm.start()
-                time.sleep(60)
                 self.cm.stop()
+                time.sleep(60)
+                self.cm.start()
 
     def stop(self):
         print "Stopping the CoffeeJob... "
-        self.cm.state = False
+        self.state = False
         self.cm.stop()
 
     def stop_callback(self, pin):
         print "PANIC BUTTON PRESSED!"
         if(self.cm.state):
             print "Stoping button"
-            self.twitter.tweet_panic()
-            self.cm.stop()
+            #self.twitter.tweet_panic()
+            self.stop()
         else:
             print "Starting make coffe again"
-            self.state = False
-            self.make_coffee()
+            self.state = True
+            self.start()
