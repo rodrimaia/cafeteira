@@ -7,19 +7,9 @@ class CoffeeMachine:
     activated = False
 
     def __init__(self):
-<<<<<<< HEAD
         self.header = Header()
         self.relay = OutputPin(self.RELAY_PIN)
         self.button = InputPin(self.BUTTON_PIN)
-=======
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.RELAY_PIN, GPIO.OUT)
-        GPIO.setup(self.BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
->>>>>>> cria status para verificar calendario
-
-    def get_state(self):
-        global activated
-        return activated
 
     def start(self):
         global activated
