@@ -32,7 +32,7 @@ class CoffeeJob:
         self.twitter.tweet()
         self.cm.start()
         count = 0
-        while count < (60*self.INTERVAL):
+        while count < (60*self.INTERVAL) and self.cm.get_state():
             time.sleep(1)
             count+=1       
         self.keep_coffee_hot()
