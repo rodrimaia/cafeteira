@@ -33,7 +33,7 @@ class CoffeeMachine:
         GPIO.add_event_detect(self.BUTTON_PIN, GPIO.RISING, callback=self.buttonHandler, bouncetime=1200)
         print "Button registered"
 
-    def buttonHandler(pin):
+    def buttonHandler(self, pin):
         global activated
         print "detectei " + str(activated)
         if(activated):
