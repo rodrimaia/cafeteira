@@ -19,13 +19,15 @@ class CoffeeJob:
         self.state = True
      
     def start(self):
-        while self.state:
-            print "verifica calendario"
-            print self.read_schedule()
-            if self.read_schedule():
-                print "Starting the CoffeeJob... "
-                self.make_coffee()
-            time.sleep(50)
+        while True:
+            print "verifica estado da cafeteira"
+            if self.state:
+                print "verifica calendario"
+                print self.read_schedule()
+                if self.read_schedule():
+                    print "Starting the CoffeeJob... "
+                    self.make_coffee()
+                time.sleep(50)
         
     def make_coffee(self):
         print "Start make coffee"
@@ -64,7 +66,7 @@ class CoffeeJob:
         if(self.cm.state):
             print "Stoping button"
             self.twitter.tweet_panic()
-            self.stop()
+            self.cm.stop()
         else:
             print "Starting make coffe again"
             self.state = False
