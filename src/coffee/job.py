@@ -9,20 +9,17 @@ class CoffeeJob:
     TIMER = 15
     INTERVAL = 30
 
-    state = None
-
     def __init__(self):
         self.twitter = CoffeeTwitter()
         self.cm = CoffeeMachine()
         self.cm.stop()
         self.cm.register_button(self.stop_callback)
-        self.state = False
-     
+        
     def start(self):
         while True:
             print "verifica calendario"
             print self.read_schedule()
-            if self.read_schedule() or self.state:
+            if self.read_schedule():
                 print "Starting the CoffeeJob... "
                 self.make_coffee()
             time.sleep(50)
@@ -31,9 +28,11 @@ class CoffeeJob:
         print "Start make coffee"
         #self.twitter.tweet()
         self.cm.start()
-        time.sleep(60*self.INTERVAL)       
+        count = 0
+        while count < (60*self.INTERVAL):
+            time.sleep(1)
+            count+=1       
         self.keep_coffee_hot()
-        self.state = False
     
     def read_schedule(self):
         now = datetime.now()
@@ -52,7 +51,6 @@ class CoffeeJob:
 
     def stop(self):
         print "Stopping the CoffeeJob... "
-        self.state = False
         self.cm.stop()
 
     def stop_callback(self, pin):
@@ -63,5 +61,4 @@ class CoffeeJob:
             self.stop()
         else:
             print "Starting make coffe again"
-            self.state = True
-            self.start()
+            self.make_coffee()
