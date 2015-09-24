@@ -41,7 +41,7 @@ class CoffeeMachine:
 
     def buttonHandler(self, pin):
         global activated
-        print "detectei " + str(activated)
+        print "detectei botao"
         if(activated):
             self.stop()
         else:
