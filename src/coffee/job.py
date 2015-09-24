@@ -28,7 +28,7 @@ class CoffeeJob:
         
     def make_coffee(self):
         print "Start make coffee"
-        #self.twitter.tweet()
+        self.twitter.tweet()
         self.cm.start()
         count = 0
         while count < (60*self.INTERVAL):
