@@ -7,7 +7,7 @@ class CoffeeMachine:
     def __init__(self):
         self.header = Header()
         self.__relay = OutputPin(self.RELAY_PIN)
-        self.__button = InputPin(self.BUTTON_PIN)
+        self.__button = InputPin(self.BUTTON_PIN,callback=self.buttonHandler)
 
     def is_relay_on(self):
         return self.__relay.value
@@ -24,14 +24,6 @@ class CoffeeMachine:
         else:
             self.start()
 
-    def register_button(self):
-        GPIO.add_event_detect(self.BUTTON_PIN, GPIO.RISING, callback=self.buttonHandler, bouncetime=1200)
-        print "Button registered"
-
-    def buttonHandler(self, pin):
-        global activated
+    def buttonHandler(self):
         print "detectei botao"
-        if(activated):
-            self.stop()
-        else:
-            self.start()
+        self.toggle()

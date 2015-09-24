@@ -22,3 +22,7 @@ class MachineTest(unittest.TestCase):
         assert self.machine.is_relay_on() == True
         self.machine.toggle()
         assert self.machine.is_relay_on() == False
+
+    def test_button_toggle_machine(self):
+        self.machine.buttonHandler()
+        assert self.machine.is_relay_on() == True
