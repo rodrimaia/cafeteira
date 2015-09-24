@@ -13,18 +13,16 @@ class CoffeeMachine:
         return self.__relay.value
 
     def start(self):
-        global activated
-        activated = True
-        self.change_state_pin()
+        self.__relay.value = True
 
     def stop(self):
-        global activated
-        activated = False
-        self.change_state_pin()
+        self.__relay.value = False
 
-    def change_state_pin(self):
-        global activated
-        GPIO.output(self.RELAY_PIN, activated)
+    def toggle(self):
+        if(self.is_relay_on()):
+            self.stop()
+        else:
+            self.start()
 
     def register_button(self):
         GPIO.add_event_detect(self.BUTTON_PIN, GPIO.RISING, callback=self.buttonHandler, bouncetime=1200)
