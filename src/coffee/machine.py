@@ -1,15 +1,16 @@
 from gpiocrust import Header, OutputPin, InputPin
 
 class CoffeeMachine:
-
     RELAY_PIN = 13
     BUTTON_PIN = 15
-    activated = False
 
     def __init__(self):
         self.header = Header()
-        self.relay = OutputPin(self.RELAY_PIN)
-        self.button = InputPin(self.BUTTON_PIN)
+        self.__relay = OutputPin(self.RELAY_PIN)
+        self.__button = InputPin(self.BUTTON_PIN)
+
+    def is_relay_on(self):
+        return self.__relay.value
 
     def start(self):
         global activated

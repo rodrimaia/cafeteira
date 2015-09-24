@@ -7,4 +7,7 @@ class MachineTest(unittest.TestCase):
         self.machine = CoffeeMachine()
 
     def test_machine_rele_should_start_turned_off(self):
-        assert self.machine.relay.value == False
+        assert self.machine.is_relay_on() == False
+
+    def test_start_should_turn_relay_on(self):
+        self.machine.start
