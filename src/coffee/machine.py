@@ -4,24 +4,39 @@ class CoffeeMachine:
 
     RELAY_PIN = 13
     BUTTON_PIN = 15
-    state = False
+    activated = False
 
     def __init__(self):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.RELAY_PIN, GPIO.OUT)
         GPIO.setup(self.BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
+    def get_state(self):
+        global activated
+        return activated
+
     def start(self):
-        self.state = True
+        global activated
+        activated = True
         self.change_state_pin()
 
     def stop(self):
-        self.state = False
+        global activated
+        activated = False
         self.change_state_pin()
 
     def change_state_pin(self):
-        GPIO.output(self.RELAY_PIN, self.state)
+        global activated
+        GPIO.output(self.RELAY_PIN, activated)
 
-    def register_button(self, action_button):
-        GPIO.add_event_detect(self.BUTTON_PIN, GPIO.RISING, callback=action_button, bouncetime=1200)
+    def register_button(self):
+        GPIO.add_event_detect(self.BUTTON_PIN, GPIO.RISING, callback=self.buttonHandler, bouncetime=1200)
         print "Button registered"
+
+    def buttonHandler(pin):
+        global activated
+        print "detectei " + str(activated)
+        if(activated):
+            self.stop()
+        else:
+            self.start()
