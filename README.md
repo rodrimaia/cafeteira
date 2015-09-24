@@ -18,4 +18,4 @@ O botão é uma forma para abortar/iniciar a rotina de fazer café, tem rotina q
 ## Circuito 
 ![alt tag](http://i63.photobucket.com/albums/h143/dmbarra/coffee_machine_circuit_schem.jpg)
 
-# Responsaveis pelo projeto: Rodrigo Maia, Daniel Barra, Rodolfo Pereira e Dawson Israel (Ordem de beleza)
+Responsaveis pelo projeto: Rodrigo Maia, Daniel Barra, Rodolfo Pereira e Dawson Israel (Ordem de beleza)
