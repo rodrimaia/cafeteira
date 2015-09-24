@@ -45,7 +45,7 @@ class CoffeeJob:
 
     def keep_coffee_hot(self):
         print "Keeping coffe hot"
-        if self.cm.state:
+        if self.cm.get_state():
             for i in range(0, self.INTERVAL):
                 time.sleep(60)
                 self.cm.stop()
