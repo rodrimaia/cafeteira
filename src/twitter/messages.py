@@ -1,3 +1,5 @@
+#!-*- conding: utf8 -*-
+
 class MessagesTwitter(object):
 	def get_message_making_coffee(self):
 		return "%02d:%02d começando os preparativos para um café. ThoughtWorks @ #CBSOFT2015"
