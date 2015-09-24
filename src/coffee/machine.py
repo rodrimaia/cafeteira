@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+from gpiocrust import Header, OutputPin, InputPin
 
 class CoffeeMachine:
 
@@ -7,10 +7,9 @@ class CoffeeMachine:
     state = None
 
     def __init__(self):
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.RELAY_PIN, GPIO.OUT)
-        GPIO.setup(self.BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
-        self.stop()
+        self.header = Header()
+        self.relay = OutputPin(self.RELAY_PIN)
+        self.button = InputPin(self.BUTTON_PIN)
 
     def start(self):
         self.state = True
