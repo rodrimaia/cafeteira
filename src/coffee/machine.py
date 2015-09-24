@@ -4,13 +4,12 @@ class CoffeeMachine:
 
     RELAY_PIN = 13
     BUTTON_PIN = 15
-    state = None
+    state = False
 
     def __init__(self):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.RELAY_PIN, GPIO.OUT)
         GPIO.setup(self.BUTTON_PIN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
-        self.stop()
 
     def start(self):
         self.state = True
