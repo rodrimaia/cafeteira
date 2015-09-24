@@ -24,6 +24,7 @@ class CoffeeJob:
                 self.make_coffee()
             if self.cm.get_state():
                 print "Fazendo cafe via botao"
+                self.make_coffee()
             time.sleep(50)
         
     def make_coffee(self):
