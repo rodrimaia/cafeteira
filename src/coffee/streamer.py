@@ -18,4 +18,4 @@ ACCESS_SECRET = 'iWvF7JkaN4OWw40RmCMTQMzol4JsoMSyptKZecIAxZRAO'
 
 stream = MyStreamer(APP_KEY, APP_SECRET,
                             ACCESS_TOKEN, ACCESS_SECRET)
-stream.statuses.filter(track='#CBSOFT2015')
+stream.statuses.filter(track='#CBSOFTTest2015')

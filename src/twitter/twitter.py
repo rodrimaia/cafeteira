@@ -29,8 +29,8 @@ class CoffeeTwitter(object):
 
     def get_status(self):
         TWEETS = [
-            "Olá, agora são %d hora(s) e %d minuto(s), o que acha de tomar um café? ThoughtWorks @ #CBSOFT2015",
-            "%02d:%02d começando os preparativos para um café. ThoughtWorks @ #CBSOFT2015"
+            "Olá, agora são %d hora(s) e %d minuto(s), o que acha de tomar um café? ThoughtWorks @ #CBSOFTTest2015",
+            "%02d:%02d começando os preparativos para um café. ThoughtWorks @ #CBSOFTTest2015"
         ]
 
         return TWEETS[int(random()*len(TWEETS))]
