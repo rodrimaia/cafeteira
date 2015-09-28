@@ -10,17 +10,20 @@ class CoffeeJob:
     INTERVAL = 30
 
     def __init__(self):
-        self.state = None
         self.twitter = CoffeeTwitter()
         self.cm = CoffeeMachine()
-        self.cm.register_button(self.stop_callback)
-     
+        self.cm.stop()
+        self.cm.register_button()
+        
     def start(self):
         while True:
             print "verifica calendario"
             print self.read_schedule()
             if self.read_schedule():
-                print "Starting the CoffeeJob... "
+                print "Fazendo cafe via calendario"
+                self.make_coffee()
+            if self.cm.get_state():
+                print "Fazendo cafe via botao"
                 self.make_coffee()
             time.sleep(50)
         
@@ -29,11 +32,10 @@ class CoffeeJob:
         self.twitter.tweet()
         self.cm.start()
         count = 0
-        while count < (60*self.INTERVAL):
+        while count < (60*self.INTERVAL) and self.cm.get_state():
             time.sleep(1)
-            count+=1
+            count+=1       
         self.keep_coffee_hot()
-
     
     def read_schedule(self):
         now = datetime.now()
@@ -43,24 +45,10 @@ class CoffeeJob:
 
     def keep_coffee_hot(self):
         print "Keeping coffe hot"
-        if self.cm.state:
+        if self.cm.get_state():
             for i in range(0, self.INTERVAL):
                 time.sleep(60)
-                self.cm.start()
-                time.sleep(60)
                 self.cm.stop()
+                time.sleep(60)
+                self.cm.start()
 
-    def stop(self):
-        print "Stopping the CoffeeJob... "
-        self.cm.state = False
-        self.cm.stop()
-
-    def stop_callback(self, pin):
-        print "PANIC BUTTON PRESSED!"
-        if(self.cm.state):
-            print "Stoping button"
-            self.twitter.tweet_panic()
-            self.stop()
-        else:
-            print "Starting make coffe again"
-            self.make_coffee()
