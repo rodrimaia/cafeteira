@@ -1,3 +1,5 @@
 schedule
 twython
-RPi.GPIO
+nose
+nose-watch
+gpiocrust
