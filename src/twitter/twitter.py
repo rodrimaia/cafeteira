@@ -3,14 +3,16 @@
 from datetime import datetime
 from random import random
 from twython import Twython
-from credentials import *
+from messages import MessagesTwitter
+from credentials import keys
+
+APP_KEY = keys['APP_KEY']
+APP_SECRET = keys['APP_SECRET']
+ACCESS_TOKEN = keys['ACCESS_TOKEN']
+ACCESS_SECRET = keys['ACCESS_SECRET']
 
 class TwitterWrapper(Twython):
     def __init__(self):
-        APP_KEY = 'APK6SDMtvi6POlzcFYxiV0idB'
-        APP_SECRET = 'tY9KKokGH2OjQVckPK6ouKhRy3ET5uKsuiazO2eZH0ecZK9v3i'
-        ACCESS_TOKEN = '3496812391-DBNN5rAROcur5UykIQY5nCTNMoTNSTopG4kLVN1'
-        ACCESS_SECRET = 'iWvF7JkaN4OWw40RmCMTQMzol4JsoMSyptKZecIAxZRAO'
         super(TwitterWrapper, self).__init__(APP_KEY, APP_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
 
 class CoffeeTwitter(object):
@@ -20,26 +22,16 @@ class CoffeeTwitter(object):
     def __init__(self):
         if self.TWITTER_ACTIVE:
             self.twitter = TwitterWrapper()
+            self.messages = MessagesTwitter()
 
     def tweet(self):
         if self.TWITTER_ACTIVE:
             now = datetime.now()
-            status = self.get_status()
+            status = self.messages.get_message_making_coffee()
             self.twitter.update_status(status = status % (now.hour, now.minute))
-
-    def get_status(self):
-        TWEETS = [
-            "Olá, agora são %d hora(s) e %d minuto(s), o que acha de tomar um café? ThoughtWorks @ #CBSOFTTest2015",
-            "%02d:%02d começando os preparativos para um café. ThoughtWorks @ #CBSOFTTest2015"
-        ]
-
-        return TWEETS[int(random()*len(TWEETS))]
 
     def tweet_panic(self):
         if self.TWITTER_ACTIVE:
             now = datetime.now()
-            status = self.get_status_panic()
+            status = self.messages.get_message_abort()
             self.twitter.update_status(status = status % (now.hour, now.minute))
-
-    def get_status_panic(self):
-        return "Olá, agora são %d hora(s) e %d minuto(s), deu treta na cafeteira, voltamos em alguns minutos!"

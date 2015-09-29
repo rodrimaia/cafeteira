@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 import time
-import schedule
 
 from machine import CoffeeMachine
 from twitter.twitter import CoffeeTwitter
@@ -14,7 +14,7 @@ class CoffeeJob:
         self.cm = CoffeeMachine()
         self.cm.stop()
         self.cm.register_button()
-        
+
     def start(self):
         while True:
             print "verifica calendario"
@@ -26,7 +26,7 @@ class CoffeeJob:
                 print "Fazendo cafe via botao"
                 self.make_coffee()
             time.sleep(50)
-        
+
     def make_coffee(self):
         print "Start make coffee"
         self.twitter.tweet()
@@ -34,9 +34,11 @@ class CoffeeJob:
         count = 0
         while count < (60*self.INTERVAL) and self.cm.get_state():
             time.sleep(1)
-            count+=1       
+            count+=1
+        if not self.cm.get_state():
+            self.twitter.tweet_panic()
         self.keep_coffee_hot()
-    
+
     def read_schedule(self):
         now = datetime.now()
         lines = [line.rstrip() for line in open("schedule_coffee.txt")]
