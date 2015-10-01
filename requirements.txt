@@ -3,3 +3,5 @@ twython
 nose
 nose-watch
 gpiocrust
+requests
+flask
