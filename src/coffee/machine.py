@@ -31,7 +31,4 @@ class CoffeeMachine:
 
     def buttonHandler(self):
         print "detectei botao"
-        if(self.is_relay_on()):
-            self.stop()
-        else:
-            self.start()
+        self.toggle()
