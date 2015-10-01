@@ -1,0 +1,16 @@
+---
+- hosts: all
+  sudo: true
+  tasks: 
+  - name: Update apt
+    apt: update_cache=yes
+  - name: Git 
+    apt: name=git 
+    sudo: yes
+  - name: Pip
+    apt: name=python-pip
+    sudo: yes
+  - name: Install Dependencies
+    pip: requirements=/vagrant/requirements.txt
+
+
