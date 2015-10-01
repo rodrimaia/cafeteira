@@ -2,6 +2,7 @@ schedule
 twython
 nose
 nose-watch
+coverage
 gpiocrust
 requests
 flask
