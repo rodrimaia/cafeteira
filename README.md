@@ -18,4 +18,11 @@ O botão é uma forma para abortar/iniciar a rotina de fazer café. Existem roti
 ## Circuito 
 ![alt tag](http://i63.photobucket.com/albums/h143/dmbarra/coffee_machine_circuit_schem.jpg)
 
+# Ambiente de desenvolvimento
+1 - Vagrant up
+2 - Vagrant ssh
+3 - cd /vagrant
+4 - Testes => nosetests 
+5 - Para rodar app => sudo src/./run
+ 
 Responsáveis pelo projeto: Rodrigo Maia, Daniel Barra, Rodolfo Pereira e Dawson Israel (Ordem de beleza)
