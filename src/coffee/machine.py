@@ -27,7 +27,7 @@ class CoffeeMachine:
 
     def register_button(self):
         print "Button registered"
-        self.__buttonpin = InputPin(self.BUTTON_PIN, callback=self.buttonHandler())
+        self.__buttonpin = InputPin(self.BUTTON_PIN, value=1, callback=self.buttonHandler(), bouncetime=800)
 
     def buttonHandler(self):
         print "detectei botao"
