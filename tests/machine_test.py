@@ -1,5 +1,5 @@
 import unittest
-from ..machine import CoffeeMachine
+from coffee.machine import CoffeeMachine
 
 class MachineTest(unittest.TestCase):
     
