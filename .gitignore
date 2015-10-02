@@ -58,3 +58,6 @@ target/
 
 #vagrant
 .vagrant/
+
+#doit
+.doit.db.db

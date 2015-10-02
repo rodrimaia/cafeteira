@@ -6,3 +6,4 @@ coverage
 gpiocrust
 requests
 flask
+doit
