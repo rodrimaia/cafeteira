@@ -6,3 +6,8 @@ def task_test_unit_watch():
 
 def task_run_coffee():
     return { 'actions' : [ 'sudo src/./run' ] } 
+
+def task_check_coverage():
+    return { 'actions' : [ 'coverage run --source=src tests/run_all_tests.py','coverage report -m' ],
+            'verbosity' : 2
+            }
