@@ -5,14 +5,11 @@ class ScheduleReader:
 
     def __init__(self):
         self
-        
-    
 
     def open_file(self):
         return open(FILE_NAME)
  
-    def read_schedule(self):
+    def read_scheduled_times(self):
         lines = [line.strip() for line in self.open_file() ]
         return lines
-        
 
