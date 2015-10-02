@@ -1,3 +1,5 @@
+[![Build Status](https://snap-ci.com/rodrigomaia17/cafeteira/branch/master/build_image)](https://snap-ci.com/rodrigomaia17/cafeteira/branch/master)
+
 # Cafeteira Hacker TW
 
 A ideia da cafeteira é criar um mecanismo, que divulgará através do twitter, o momento no qual começaríamos a fazer café.
@@ -22,7 +24,7 @@ O botão é uma forma para abortar/iniciar a rotina de fazer café. Existem roti
 - Vagrant up
 - Vagrant ssh
 - cd /vagrant
-- Testes => nosetests 
-- Para rodar app => sudo src/./run
+- Testes => doit unit_test 
+- Para rodar app => sudo src/run
  
 Responsáveis pelo projeto: Rodrigo Maia, Daniel Barra, Rodolfo Pereira e Dawson Israel (Ordem de beleza)
