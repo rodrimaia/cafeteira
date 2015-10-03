@@ -7,4 +7,4 @@ gpiocrust
 requests
 flask
 doit
-mock
+mock==1.0.1
