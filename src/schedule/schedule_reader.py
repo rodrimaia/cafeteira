@@ -1,4 +1,3 @@
-
 class ScheduleReader:
 
     FILE_NAME = "schedule_coffee.txt"
@@ -12,4 +11,3 @@ class ScheduleReader:
     def read_scheduled_times(self):
         lines = [line.strip() for line in self.open_file() ]
         return lines
-
