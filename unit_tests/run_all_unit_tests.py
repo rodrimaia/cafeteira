@@ -1,3 +1,2 @@
 import nose
-
 nose.main()
