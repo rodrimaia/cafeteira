@@ -1,8 +1,11 @@
 def task_unit_test():
-    return { 'actions' : [ 'python unit_tests/run_all_unit_tests.py']  } 
+    return { 'actions' : [ 'nosetests -w . unit_tests']  } 
 
 def task_unit_test_watch():
-    return { 'actions' : [ 'nosetests --with-watch' ] }
+    return { 'actions' : [ 'nosetests --with-watch -w . unit_tests' ] }
+
+def task_integration_test():
+    return { 'actions' : [ 'nosetests -w . integration_tests' ] }
 
 def task_run_coffee():
     return { 'actions' : [ 'sudo src/./run' ] } 
