@@ -1,7 +1,7 @@
-def task_test_unit():
+def task_unit_test():
     return { 'actions' : [ 'python tests/run_all_tests.py']  } 
 
-def task_test_unit_watch():
+def task_unit_test_watch():
     return { 'actions' : [ 'nosetests --with-watch' ] }
 
 def task_run_coffee():
