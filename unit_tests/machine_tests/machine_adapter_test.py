@@ -1,10 +1,10 @@
 import unittest
-from coffee.machine import CoffeeMachine
+from machine.machine_adapter import MachineAdapter
 
 class MachineTest(unittest.TestCase):
 
     def setUp(self):
-        self.machine = CoffeeMachine()
+        self.machine = MachineAdapter()
 
     def test_machine_relay_should_start_turned_off(self):
         assert self.machine.is_relay_on() == False

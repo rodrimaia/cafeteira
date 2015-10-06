@@ -1,6 +1,6 @@
 from gpiocrust import Header, OutputPin, InputPin
 
-class CoffeeMachine:
+class MachineAdapter:
 
     RELAY_PIN = 13
     BUTTON_PIN = 15
