@@ -8,7 +8,9 @@ APP_SECRET = keys['APP_SECRET']
 ACCESS_TOKEN = keys['ACCESS_TOKEN']
 ACCESS_SECRET = keys['ACCESS_SECRET']
 
+
 class MyStreamer(TwythonStreamer):
+
     def on_success(self, data):
         if 'text' in data:
             print data['text'].encode('utf-8')
@@ -17,5 +19,5 @@ class MyStreamer(TwythonStreamer):
         print status_code
 
 
-stream = MyStreamer(APP_KEY, APP_SECRET,ACCESS_TOKEN, ACCESS_SECRET)
+stream = MyStreamer(APP_KEY, APP_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
 stream.statuses.filter(track='#CBSOFTTest2015')

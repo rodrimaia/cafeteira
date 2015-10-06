@@ -1,5 +1,6 @@
 from gpiocrust import Header, OutputPin, InputPin
 
+
 class MachineAdapter:
 
     RELAY_PIN = 13
@@ -8,7 +9,7 @@ class MachineAdapter:
 
     def __init__(self):
         self.header = Header()
-        self.__relay= OutputPin(self.RELAY_PIN)
+        self.__relay = OutputPin(self.RELAY_PIN)
 
     def is_relay_on(self):
         return self.__relay.value
@@ -27,7 +28,9 @@ class MachineAdapter:
 
     def register_button(self):
         print "Button registered"
-        self.__buttonpin = InputPin(self.BUTTON_PIN, value=1, callback=self.buttonHandler(), bouncetime=800)
+        self.__buttonpin = InputPin(
+            self.BUTTON_PIN, value=1, callback=self.buttonHandler(),
+            bouncetime=800)
 
     def buttonHandler(self):
         print "detectei botao"

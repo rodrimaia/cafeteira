@@ -1,6 +1,6 @@
 import unittest
 from api.api import Api
-import requests
+
 
 class ApiTest(unittest.TestCase):
 
@@ -9,4 +9,4 @@ class ApiTest(unittest.TestCase):
 
     def test_hello_api(self):
         r = self.tester.get('/')
-        self.assertEqual(r.data,'Hello World!')
+        self.assertEqual(r.data, 'Hello World!')

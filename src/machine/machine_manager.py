@@ -4,9 +4,11 @@ from enum import Enum
 
 from machine_adapter import MachineAdapter
 
+
 class MachineStatus(Enum):
     stand_by = 1
     making_coffee = 2
+
 
 class MachineManager:
 
@@ -22,8 +24,5 @@ class MachineManager:
         for _ in range(self.MAKE_COFFEE_TIME):
             self.wait_one_minute()
 
-
     def wait_one_minute(self):
         time.sleep(60)
-
-

@@ -5,11 +5,13 @@ import sys
 
 from coffee.job import CoffeeJob
 
+
 def check_superuser():
     if os.geteuid() != 0:
         print "Try to run as Superuser."
         print "e.g.: sudo " + sys.argv[0]
         exit(1)
+
 
 def main():
     check_superuser()
