@@ -6,6 +6,7 @@ import time
 
 from machine.machine_manager import MachineManager, MachineStatus
 from schedule.schedule_manager import ScheduleManager
+from schedule.schedule_reader import ScheduleReader
 
 
 def check_superuser():
@@ -17,13 +18,15 @@ def check_superuser():
 
 def main():
     FILE_PATH = 'schedule_coffee.txt'
+    reader = ScheduleReader(FILE_PATH)
     check_superuser()
-    schedule = ScheduleManager(FILE_PATH)
+    times = reader.read_scheduled_times()
+    schedule = ScheduleManager(times)
     machine = MachineManager()
     print 'comecando a esperar'
 
     while(True):
-        if (schedule.its_time and
+        if (schedule.its_time() and
                 machine.machine_status == MachineStatus.stand_by):
             machine.make_coffee()
             machine.keep_coffee_hot()
