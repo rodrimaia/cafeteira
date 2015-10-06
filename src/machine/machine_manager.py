@@ -2,8 +2,7 @@
 import time
 from enum import Enum
 
-from machine import MachineAdapter
-
+from machine_adapter import MachineAdapter
 
 class MachineStatus(Enum):
     stand_by = 1
