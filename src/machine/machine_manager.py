@@ -21,12 +21,14 @@ class MachineManager:
         self.machine_status = MachineStatus.stand_by
 
     def make_coffee(self):
+        print 'comecando a fazer cafe'
         self.machine_adapter.start()
         self.machine_status = MachineStatus.making_coffee
         for _ in range(self.MAKE_COFFEE_TIME):
             self.wait_one_minute()
 
     def keep_coffee_hot(self):
+        print 'esquentando cafe'
         self.machine_status = MachineStatus.warming_coffee
         for _ in range(self.WARM_COFFEE_TIME):
             self.machine_adapter.stop()

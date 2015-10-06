@@ -2,8 +2,10 @@
 
 import os
 import sys
+import time
 
-from coffee.job import CoffeeJob
+from machine.machine_manager import MachineManager, MachineStatus
+from schedule.schedule_manager import ScheduleManager
 
 
 def check_superuser():
@@ -14,7 +16,19 @@ def check_superuser():
 
 
 def main():
+    FILE_PATH = 'schedule_coffee.txt'
     check_superuser()
+    schedule = ScheduleManager(FILE_PATH)
+    machine = MachineManager()
+    print 'comecando a esperar'
+
+    while(True):
+        if (schedule.its_time and
+                machine.machine_status == MachineStatus.stand_by):
+            machine.make_coffee()
+            machine.keep_coffee_hot()
+        time.sleep(59)
+
 
 if __name__ == "__main__":
     main()

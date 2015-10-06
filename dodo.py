@@ -11,7 +11,9 @@ def task_integration_test():
 
 
 def task_run_coffee():
-    return {'actions': ['sudo src/./run']}
+    return {'actions': ['sudo src/run'],
+            'verbosity': 2
+            }
 
 
 def task_check_coverage():
