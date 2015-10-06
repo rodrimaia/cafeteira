@@ -10,3 +10,4 @@ doit
 mock==1.0.1
 freezegun
 enum34
+flake8
