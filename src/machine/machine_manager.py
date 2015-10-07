@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-import time
 from enum import Enum
-
+from datetime import datetime
 from machine_adapter import MachineAdapter
 
 
@@ -48,4 +47,6 @@ class MachineManager:
         self.machine_adapter.register_button(button_callback)
 
     def wait_one_minute(self):
-        time.sleep(60)
+        target = datetime.now()
+        while(target.minute == datetime.now().minute):
+            pass
