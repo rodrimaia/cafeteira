@@ -2,11 +2,8 @@
 
 import os
 import sys
-import time
 
-from machine.machine_manager import MachineManager, MachineStatus
-from schedule.schedule_manager import ScheduleManager
-from schedule.schedule_reader import ScheduleReader
+from cafeteira import Cafeteira
 
 
 def check_superuser():
@@ -15,23 +12,6 @@ def check_superuser():
         print "e.g.: sudo " + sys.argv[0]
         exit(1)
 
-
-def main():
-    FILE_PATH = 'schedule_coffee.txt'
-    reader = ScheduleReader(FILE_PATH)
-    check_superuser()
-    times = reader.read_scheduled_times()
-    schedule = ScheduleManager(times)
-    machine = MachineManager()
-    print 'comecando a esperar'
-
-    while(True):
-        if (schedule.its_time() and
-                machine.machine_status == MachineStatus.stand_by):
-            machine.make_coffee()
-            machine.keep_coffee_hot()
-        time.sleep(59)
-
-
 if __name__ == "__main__":
-    main()
+    check_superuser()
+    Cafeteira()

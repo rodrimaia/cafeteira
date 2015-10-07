@@ -26,10 +26,12 @@ class MachineAdapter:
         else:
             self.start()
 
-    def register_button(self):
+    def register_button(self, button_callback):
+        if button_callback is None:
+            button_callback = self.buttonHandler
         print "Button registered"
         self.__buttonpin = InputPin(
-            self.BUTTON_PIN, value=1, callback=self.buttonHandler(),
+            self.BUTTON_PIN, value=1, callback=button_callback,
             bouncetime=800)
 
     def buttonHandler(self):

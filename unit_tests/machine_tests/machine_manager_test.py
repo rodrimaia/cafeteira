@@ -28,3 +28,21 @@ class MachineManagerTest(unittest.TestCase):
         self.assertEquals(self.adapter_stop_mock.call_count, 30)
         self.assertEquals(self.adapter_start_mock.call_count, 30)
         self.assertEquals(MachineManager.wait_one_minute.call_count, 60)
+
+    def test_machine_interrupt_should_stop_making_coffee(self):
+        self.target.make_coffee()
+        self.target.interrupt_machine()
+        self.assertEquals(self.target.machine_status, MachineStatus.stand_by)
+        self.assertTrue(self.adapter_stop_mock.called)
+
+    def test_machine_interrupt_should_stop_keeping_coffee_hot(self):
+        self.target.keep_coffee_hot()
+        self.target.interrupt_machine()
+        self.assertEquals(self.target.machine_status, MachineStatus.stand_by)
+        self.assertTrue(self.adapter_stop_mock.called)
+
+    def test_machine_interrupt_should_start_machine_if_it_is_in_stand_by(self):
+        self.target.interrupt_machine()
+        status = self.target.machine_status
+        self.assertEquals(status, MachineStatus.making_coffee)
+        self.assertTrue(self.adapter_start_mock.called)

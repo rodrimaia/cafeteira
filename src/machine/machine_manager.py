@@ -36,5 +36,16 @@ class MachineManager:
             self.machine_adapter.start()
             self.wait_one_minute()
 
+    def interrupt_machine(self):
+        if(self.machine_status != MachineStatus.stand_by):
+            self.machine_adapter.stop()
+            self.machine_status = MachineStatus.stand_by
+        else:
+            self.make_coffee()
+
+    def listen_button(self, button_callback):
+        print 'escutando o botao'
+        self.machine_adapter.register_button(button_callback)
+
     def wait_one_minute(self):
         time.sleep(60)
