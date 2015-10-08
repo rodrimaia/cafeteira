@@ -16,6 +16,7 @@ class Cafeteira:
         while(True):
             if (self.schedule.its_time() and
                     self.machine.machine_status == MachineStatus.stand_by):
+                print 'horario confere com agendado'
                 self.machine.make_coffee()
                 self.machine.keep_coffee_hot()
             time.sleep(59)
