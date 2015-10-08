@@ -1,7 +1,7 @@
 import unittest
 
 from machine.machine_manager import MachineManager, MachineStatus
-from mock import MagicMock
+from mock import MagicMock, Mock
 
 
 class MachineManagerTest(unittest.TestCase):
@@ -29,6 +29,18 @@ class MachineManagerTest(unittest.TestCase):
         self.assertEquals(self.adapter_start_mock.call_count, 30)
         self.assertEquals(MachineManager.wait_one_minute.call_count, 60)
 
+    def test_machine_should_set_machine_standby_when_making_coffee(self):
+        self.target.machine_status = MachineStatus.making_coffee
+        self.target.go_back_stand_by()
+        self.assertEquals(self.target.machine_status, MachineStatus.stand_by)
+        self.assertEquals(self.adapter_stop_mock.call_count, 1)
+
+    def test_machine_should_set_machine_standby_when_warming_coffee(self):
+        self.target.machine_status = MachineStatus.warming_coffee
+        self.target.go_back_stand_by()
+        self.assertEquals(self.target.machine_status, MachineStatus.stand_by)
+        self.assertEquals(self.adapter_stop_mock.call_count, 1)
+
     def test_machine_interrupt_should_stop_making_coffee(self):
         self.target.make_coffee()
         self.target.interrupt_machine()
@@ -42,7 +54,13 @@ class MachineManagerTest(unittest.TestCase):
         self.assertTrue(self.adapter_stop_mock.called)
 
     def test_machine_interrupt_should_start_machine_if_it_is_in_stand_by(self):
+        make_coffee_mock = Mock(wraps=self.target.make_coffee)
+        keep_coffee_hot = Mock(wraps=self.target.keep_coffee_hot)
+        go_back_stand_by = Mock(wraps=self.target.go_back_stand_by)
+        self.target.make_coffee = make_coffee_mock
+        self.target.keep_coffee_hot = keep_coffee_hot
+        self.target.go_back_stand_by = go_back_stand_by
         self.target.interrupt_machine()
-        status = self.target.machine_status
-        self.assertEquals(status, MachineStatus.making_coffee)
-        self.assertTrue(self.adapter_start_mock.called)
+        self.assertTrue(self.target.make_coffee.called)
+        self.assertTrue(self.target.keep_coffee_hot.called)
+        self.assertTrue(self.target.go_back_stand_by.called)

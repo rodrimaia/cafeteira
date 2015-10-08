@@ -19,12 +19,15 @@ class Cafeteira:
                 print 'horario confere com agendado'
                 self.machine.make_coffee()
                 self.machine.keep_coffee_hot()
+                self.machine.go_back_stand_by()
             time.sleep(59)
 
     def button_callback(self, pin):
         print "botao acionado"
         if (self.machine.machine_status == MachineStatus.stand_by):
             self.machine.make_coffee()
+            self.machine.keep_coffee_hot()
+            self.machine.go_back_stand_by()
         else:
             self.machine.interrupt()
 

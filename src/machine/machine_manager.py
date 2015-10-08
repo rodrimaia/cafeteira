@@ -35,12 +35,19 @@ class MachineManager:
             self.machine_adapter.start()
             self.wait_one_minute()
 
+    def go_back_stand_by(self):
+        print 'Volta Status esperando'
+        self.machine_status = MachineStatus.stand_by
+        self.machine_adapter.stop()
+
     def interrupt_machine(self):
         if(self.machine_status != MachineStatus.stand_by):
             self.machine_adapter.stop()
             self.machine_status = MachineStatus.stand_by
         else:
             self.make_coffee()
+            self.keep_coffee_hot()
+            self.go_back_stand_by()
 
     def listen_button(self, button_callback):
         print 'escutando o botao'
