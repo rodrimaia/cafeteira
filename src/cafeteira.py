@@ -18,7 +18,7 @@ class Cafeteira:
                     self.machine.machine_status == MachineStatus.stand_by):
                 self.machine.make_coffee()
                 self.machine.keep_coffee_hot()
-        time.sleep(59)
+            time.sleep(59)
 
     def button_callback(self, pin):
         print "botao acionado"
