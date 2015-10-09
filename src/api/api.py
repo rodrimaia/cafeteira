@@ -30,7 +30,7 @@ def get_status():
 
 @app.route("/cafe", methods=['POST'])
 def post_start_machine():
-    dados.machine.make_coffee()
+    dados.machine.make_coffee_async()
     return get_status()
 
 
