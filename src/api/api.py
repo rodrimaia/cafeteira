@@ -1,16 +1,38 @@
-from flask import Flask
+from flask import Flask, jsonify
+
+
+class ApiData:
+    def __init__(self):
+        self.machine = None
 
 
 class Api:
-
-    app = Flask(__name__)
-
-    def __init__(self):
-        pass
-
-    @app.route("/")
-    def hello():
-        return "Hello World!"
+    def __init__(self, machine):
+        dados.machine = machine
 
     def start(self):
-        self.app.run()
+        start()
+
+
+app = Flask(__name__)
+dados = ApiData()
+
+
+@app.route("/")
+def hello():
+    return 'Api da Cafeteira'
+
+
+@app.route("/cafe", methods=['GET'])
+def get_status():
+    return jsonify(status=dados.machine.machine_status.name)
+
+
+@app.route("/cafe", methods=['POST'])
+def post_start_machine():
+    dados.machine.make_coffee()
+    return get_status()
+
+
+def start():
+    app.run(debug=True, port=3000, host='0.0.0.0')

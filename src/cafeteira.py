@@ -3,6 +3,7 @@ import time
 from machine.machine_manager import MachineManager, MachineStatus
 from schedule.schedule_manager import ScheduleManager
 from schedule.schedule_reader import ScheduleReader
+from api.api import Api
 
 
 class Cafeteira:
@@ -11,6 +12,7 @@ class Cafeteira:
         self.schedule = self.setup_schedule()
         self.machine = MachineManager()
         self.machine.listen_button(self.button_callback)
+        Api(self.machine).start()
         print 'comecando a esperar'
 
         while(True):
