@@ -29,9 +29,10 @@ class MachineManager:
             self.wait_one_minute()
 
     def make_coffee_async(self):
-        p = Process(target=self.make_coffee)
-        p.start()
-        self.current_action = p
+        if(self.current_action is None):
+            p = Process(target=self.make_coffee)
+            p.start()
+            self.current_action = p
 
     def keep_coffee_hot(self):
         print 'esquentando cafe'
