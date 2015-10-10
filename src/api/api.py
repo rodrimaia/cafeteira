@@ -9,6 +9,7 @@ class ApiData:
 class Api:
     def __init__(self, machine):
         dados.machine = machine
+        self.app = app
 
     def start(self):
         start()
