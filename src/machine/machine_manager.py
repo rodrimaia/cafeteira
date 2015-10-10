@@ -21,18 +21,23 @@ class MachineManager:
         self.machine_status = MachineStatus.stand_by
         self.current_action = None
 
+    def start_coffee_routine_async(self):
+        if(self.current_action is None):
+            p = Process(target=self.start_coffee_routine)
+            p.start()
+            self.current_action = p
+
+    def start_coffee_routine(self):
+        self.make_coffee()
+        self.keep_coffee_hot()
+        self.interrupt_machine()
+
     def make_coffee(self):
         print 'comecando a fazer cafe'
         self.machine_adapter.start()
         self.machine_status = MachineStatus.making_coffee
         for _ in range(self.MAKE_COFFEE_TIME):
             self.wait_one_minute()
-
-    def make_coffee_async(self):
-        if(self.current_action is None):
-            p = Process(target=self.make_coffee)
-            p.start()
-            self.current_action = p
 
     def keep_coffee_hot(self):
         print 'esquentando cafe'

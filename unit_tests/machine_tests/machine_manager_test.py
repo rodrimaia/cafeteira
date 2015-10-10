@@ -14,6 +14,18 @@ class MachineManagerTest(unittest.TestCase):
         self.target.machine_adapter.stop = self.adapter_stop_mock
         MachineManager.wait_one_minute = MagicMock()
 
+    def test_machine_routine_should_make_and_keep_coffee_hot(self):
+        self.target.make_coffee = Mock(wraps=self.target.make_coffee)
+        self.target.keep_coffee_hot = Mock(wraps=self.target.keep_coffee_hot)
+        interrupt_mock = Mock(wraps=self.target.interrupt_machine)
+        self.target.interrupt_machine = interrupt_mock
+
+        self.target.start_coffee_routine()
+
+        self.assertTrue(self.target.make_coffee.called)
+        self.assertTrue(self.target.keep_coffee_hot.called)
+        self.assertTrue(self.target.interrupt_machine.called)
+
     def test_machine_should_make_coffee(self):
         self.target.make_coffee()
         self.assertEquals(self.target.machine_status,
