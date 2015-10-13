@@ -17,8 +17,7 @@ class MachineManagerTest(unittest.TestCase):
     def test_machine_routine_should_make_and_keep_coffee_hot(self):
         self.target.make_coffee = Mock(wraps=self.target.make_coffee)
         self.target.keep_coffee_hot = Mock(wraps=self.target.keep_coffee_hot)
-        self.target.go_back_stand_by  = Mock(wraps=self.target.go_back_stand_by)
-       
+        self.target.go_back_stand_by = Mock(wraps=self.target.go_back_stand_by)
         self.target.start_coffee_routine()
         self.assertTrue(self.target.make_coffee.called)
         self.assertTrue(self.target.keep_coffee_hot.called)
@@ -67,7 +66,6 @@ class MachineManagerTest(unittest.TestCase):
         self.target.make_coffee = Mock(wraps=self.target.make_coffee)
         self.target.keep_coffee_hot = Mock(wraps=self.target.keep_coffee_hot)
         self.target.go_back_stand_by = Mock(wraps=self.target.go_back_stand_by)
-        
         self.target.interrupt_machine()
         self.assertTrue(self.target.make_coffee.called)
         self.assertTrue(self.target.keep_coffee_hot.called)
