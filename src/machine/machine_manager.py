@@ -2,7 +2,6 @@
 from enum import Enum
 from datetime import datetime
 from machine_adapter import MachineAdapter
-from multiprocessing import Process
 
 
 class MachineStatus(Enum):
@@ -19,7 +18,6 @@ class MachineManager:
     def __init__(self):
         self.machine_adapter = MachineAdapter()
         self.machine_status = MachineStatus.stand_by
-        self.current_action = None
 
     def start_coffee_routine(self):
         self.make_coffee()

@@ -1,39 +1,34 @@
 from flask import Flask, jsonify
 
-
-class ApiData:
-    def __init__(self):
-        self.machine = None
+cafeteira_app = None
+api_flask = Flask(__name__)
 
 
-class Api:
-    def __init__(self, machine):
-        dados.machine = machine
-        self.app = app
-
-    def start(self):
-        start()
-
-
-app = Flask(__name__)
-dados = ApiData()
-
-
-@app.route("/")
+@api_flask.route("/")
 def hello():
     return 'Api da Cafeteira'
 
 
-@app.route("/cafe", methods=['GET'])
+@api_flask.route("/cafe", methods=['GET'])
 def get_status():
-    return jsonify(status=dados.machine.machine_status.name)
+    return jsonify(status=cafeteira_app.get_machine_status().name)
 
 
-@app.route("/cafe", methods=['POST'])
+@api_flask.route("/cafe", methods=['POST'])
 def post_start_machine():
-    dados.machine.start_coffee_routine_async()
+    cafeteira_app.start_coffee_routine_async()
     return get_status()
 
 
 def start():
-    app.run(debug=True, port=3000, host='0.0.0.0')
+    api_flask.run(debug=True, port=3000, host='0.0.0.0')
+
+
+class Api:
+    def __init__(self, app):
+        global cafeteira_app
+        cafeteira_app = app
+        self.api_flask = api_flask
+
+    def start(self):
+        start()
