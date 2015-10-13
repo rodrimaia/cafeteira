@@ -17,14 +17,14 @@ class MachineManagerTest(unittest.TestCase):
     def test_machine_routine_should_make_and_keep_coffee_hot(self):
         self.target.make_coffee = Mock(wraps=self.target.make_coffee)
         self.target.keep_coffee_hot = Mock(wraps=self.target.keep_coffee_hot)
-        interrupt_mock = Mock(wraps=self.target.interrupt_machine)
-        self.target.interrupt_machine = interrupt_mock
+        go_back_stand_by = Mock(wraps=self.target.go_back_stand_by)
+        self.target.go_back_stand_by = go_back_stand_by
 
         self.target.start_coffee_routine()
 
         self.assertTrue(self.target.make_coffee.called)
         self.assertTrue(self.target.keep_coffee_hot.called)
-        self.assertTrue(self.target.interrupt_machine.called)
+        self.assertTrue(self.target.go_back_stand_by.called)
 
     def test_machine_should_make_coffee(self):
         self.target.make_coffee()
