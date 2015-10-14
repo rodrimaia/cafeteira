@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 
-cafeteira_app = None
+coffee_app = None
 api_flask = Flask(__name__)
 
 
@@ -11,12 +11,12 @@ def hello():
 
 @api_flask.route("/cafe", methods=['GET'])
 def get_status():
-    return jsonify(status=cafeteira_app.get_machine_status().name)
+    return jsonify(status=coffee_app.get_machine_status().name)
 
 
 @api_flask.route("/cafe", methods=['POST'])
 def post_start_machine():
-    cafeteira_app.start_coffee_routine_async()
+    coffee_app.start_coffee_routine_async()
     return get_status()
 
 
@@ -26,8 +26,8 @@ def start():
 
 class Api:
     def __init__(self, app):
-        global cafeteira_app
-        cafeteira_app = app
+        global coffee_app
+        coffee_app = app
         self.api_flask = api_flask
 
     def start(self):

@@ -8,10 +8,11 @@ from machine.machine_manager import MachineStatus
 class ApiTest(unittest.TestCase):
 
     def setUp(self):
-        cafeteira = Mock()
-        cafeteira.get_machine_status = MagicMock(
+        self.cafeteira = Mock()
+        self.cafeteira.get_machine_status = MagicMock(
             return_value=MachineStatus.stand_by)
-        self.tester = Api(cafeteira).api_flask.test_client(self)
+        self.cafeteira.start_coffee_routine_async = MagicMock()
+        self.tester = Api(self.cafeteira).api_flask.test_client(self)
 
     def test_hello_api(self):
         r = self.tester.get('/')
@@ -21,3 +22,8 @@ class ApiTest(unittest.TestCase):
         r = self.tester.get('/cafe')
         expected = json.dumps({'status': 'stand_by'}, indent=2)
         self.assertEqual(r.data, expected)
+
+    def test_cafe_should_start_make_coffee(self):
+        self.tester.post('/cafe')
+        self.assertTrue(self.cafeteira.start_coffee_routine_async.called)
+        self.assertTrue(self.cafeteira.get_machine_status.called)
