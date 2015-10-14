@@ -24,7 +24,7 @@ def start():
     api_flask.run(debug=True, port=3000, host='0.0.0.0')
 
 
-class Api:
+class ApiManager:
     def __init__(self, app):
         global coffee_app
         coffee_app = app

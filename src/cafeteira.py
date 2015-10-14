@@ -1,3 +1,5 @@
+import time
+
 from machine.machine_manager import MachineManager, MachineStatus
 from schedule.schedule_manager import ScheduleManager
 from schedule.schedule_reader import ScheduleReader
@@ -40,6 +42,7 @@ class Cafeteira:
             if (self.schedule.its_time() and self.current_action is None):
                 print 'Schedule time is ok'
                 self.start_coffee_routine_async()
+            time.sleep(30)
 
     def start_coffee_routine_async(self):
         print 'Call routine async'
