@@ -4,7 +4,7 @@ from machine.machine_manager import MachineManager, MachineStatus
 from schedule.schedule_manager import ScheduleManager
 from schedule.schedule_reader import ScheduleReader
 from multiprocessing import Process
-from api.api import Api
+from api.api_manager import ApiManager
 
 
 current_action = None
@@ -16,7 +16,7 @@ class Cafeteira:
         self.schedule = self.setup_schedule()
         self.machine = MachineManager()
         self.machine.listen_button(self.button_callback)
-        thread_api = Process(target=Api(self).start)
+        thread_api = Process(target=ApiManager(self).start)
         thread_reading_schedule = Process(target=self.check_schedule_are_ok)
         thread_reading_schedule.start()
         thread_api.start()
