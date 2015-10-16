@@ -14,6 +14,15 @@ class MachineManagerTest(unittest.TestCase):
         self.target.machine_adapter.stop = self.adapter_stop_mock
         MachineManager.wait_one_minute = MagicMock()
 
+    def test_machine_routine_should_make_and_keep_coffee_hot(self):
+        self.target.make_coffee = Mock(wraps=self.target.make_coffee)
+        self.target.keep_coffee_hot = Mock(wraps=self.target.keep_coffee_hot)
+        self.target.go_back_stand_by = Mock(wraps=self.target.go_back_stand_by)
+        self.target.start_coffee_routine()
+        self.assertTrue(self.target.make_coffee.called)
+        self.assertTrue(self.target.keep_coffee_hot.called)
+        self.assertTrue(self.target.go_back_stand_by.called)
+
     def test_machine_should_make_coffee(self):
         self.target.make_coffee()
         self.assertEquals(self.target.machine_status,
@@ -54,13 +63,7 @@ class MachineManagerTest(unittest.TestCase):
         self.assertTrue(self.adapter_stop_mock.called)
 
     def test_machine_interrupt_should_start_machine_if_it_is_in_stand_by(self):
-        make_coffee_mock = Mock(wraps=self.target.make_coffee)
-        keep_coffee_hot = Mock(wraps=self.target.keep_coffee_hot)
-        go_back_stand_by = Mock(wraps=self.target.go_back_stand_by)
-        self.target.make_coffee = make_coffee_mock
-        self.target.keep_coffee_hot = keep_coffee_hot
-        self.target.go_back_stand_by = go_back_stand_by
+        self.target.start_coffee_routine = Mock(
+            wraps=self.target.start_coffee_routine)
         self.target.interrupt_machine()
-        self.assertTrue(self.target.make_coffee.called)
-        self.assertTrue(self.target.keep_coffee_hot.called)
-        self.assertTrue(self.target.go_back_stand_by.called)
+        self.assertTrue(self.target.start_coffee_routine.called)

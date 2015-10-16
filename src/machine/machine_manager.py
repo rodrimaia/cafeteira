@@ -19,6 +19,11 @@ class MachineManager:
         self.machine_adapter = MachineAdapter()
         self.machine_status = MachineStatus.stand_by
 
+    def start_coffee_routine(self):
+        self.make_coffee()
+        self.keep_coffee_hot()
+        self.go_back_stand_by()
+
     def make_coffee(self):
         print 'comecando a fazer cafe'
         self.machine_adapter.start()
@@ -42,12 +47,9 @@ class MachineManager:
 
     def interrupt_machine(self):
         if(self.machine_status != MachineStatus.stand_by):
-            self.machine_adapter.stop()
-            self.machine_status = MachineStatus.stand_by
-        else:
-            self.make_coffee()
-            self.keep_coffee_hot()
             self.go_back_stand_by()
+        else:
+            self.start_coffee_routine()
 
     def listen_button(self, button_callback):
         print 'escutando o botao'

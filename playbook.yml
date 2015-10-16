@@ -1,7 +1,7 @@
 ---
 - hosts: all
   sudo: true
-  tasks: 
+  tasks:
   - name: Update apt
     apt: update_cache=yes
   - name: Git 
@@ -12,5 +12,20 @@
     sudo: yes
   - name: Install Dependencies
     pip: requirements=/vagrant/requirements.txt
-
-
+- name: Set Time Zone
+  hosts: all
+  sudo: true
+  gather_facts: False
+  tasks:
+    - name: Set timezone variables
+      copy: content='America/Sao_Paulo'
+            dest=/etc/timezone
+            owner=root
+            group=root
+            mode=0644
+            backup=yes
+      notify:
+        - update timezone
+  handlers:
+    - name: update timezone
+      command: dpkg-reconfigure --frontend noninteractive tzdata
