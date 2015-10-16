@@ -63,6 +63,7 @@ class MachineManagerTest(unittest.TestCase):
         self.assertTrue(self.adapter_stop_mock.called)
 
     def test_machine_interrupt_should_start_machine_if_it_is_in_stand_by(self):
-        self.target.start_coffee_routine = Mock(wraps=self.target.start_coffee_routine)
+        self.target.start_coffee_routine = Mock(
+            wraps=self.target.start_coffee_routine)
         self.target.interrupt_machine()
         self.assertTrue(self.target.start_coffee_routine.called)
