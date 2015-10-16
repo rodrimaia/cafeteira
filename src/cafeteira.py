@@ -3,6 +3,7 @@ import time
 from machine.machine_manager import MachineManager, MachineStatus
 from schedule.schedule_manager import ScheduleManager
 from schedule.schedule_reader import ScheduleReader
+from threading import Thread
 from multiprocessing import Process
 from api.api_manager import ApiManager
 
@@ -57,7 +58,8 @@ class Cafeteira:
         global current_action
         if current_action is None:
             print "Create thread for coffee"
-            thread_making_coffee = Process(
-                target=self.machine.start_coffee_routine)
+            thread_making_coffee = Thread(
+                target=self.machine.start_coffee_routine
+            )
             thread_making_coffee.start()
             current_action = thread_making_coffee
