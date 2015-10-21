@@ -2,6 +2,7 @@
 from enum import Enum
 from datetime import datetime
 from machine_adapter import MachineAdapter
+from logger import logger
 
 
 class MachineStatus(Enum):
@@ -25,14 +26,14 @@ class MachineManager:
         self.go_back_stand_by()
 
     def make_coffee(self):
-        print 'comecando a fazer cafe'
+        logger.debug('Start make coffee')
         self.machine_adapter.start()
         self.machine_status = MachineStatus.making_coffee
         for _ in range(self.MAKE_COFFEE_TIME):
             self.wait_one_minute()
 
     def keep_coffee_hot(self):
-        print 'esquentando cafe'
+        logger.debug('Keep coffee hot for 60 minuts')
         self.machine_status = MachineStatus.warming_coffee
         for _ in range(self.WARM_COFFEE_TIME):
             self.machine_adapter.stop()
@@ -41,7 +42,7 @@ class MachineManager:
             self.wait_one_minute()
 
     def go_back_stand_by(self):
-        print 'Volta Status esperando'
+        logger.debug('Send coffee machine to stand by mod')
         self.machine_status = MachineStatus.stand_by
         self.machine_adapter.stop()
 
@@ -52,7 +53,7 @@ class MachineManager:
             self.start_coffee_routine()
 
     def listen_button(self, button_callback):
-        print 'escutando o botao'
+        logger.debug('Listen button')
         self.machine_adapter.register_button(button_callback)
 
     def wait_one_minute(self):

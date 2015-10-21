@@ -1,12 +1,12 @@
 from datetime import datetime
-
+from logger import logger
 
 class ScheduleManager():
 
     def __init__(self, scheduled_times):
         self.times = scheduled_times
-        print 'agendado cafe nos seguintes tempos'
-        print self.times
+        logger.debug('Schedule times')
+        logger.debug(self.times)
 
     def get_actual_time(self):
         now = datetime.now()

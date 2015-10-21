@@ -1,4 +1,5 @@
 from gpiocrust import Header, OutputPin, InputPin
+from logger import logger
 
 
 class MachineAdapter:
@@ -29,11 +30,11 @@ class MachineAdapter:
     def register_button(self, button_callback):
         if button_callback is None:
             button_callback = self.buttonHandler
-        print "Button registered"
+        logger.debug('Button register')
         self.__buttonpin = InputPin(
             self.BUTTON_PIN, value=1, callback=button_callback,
             bouncetime=800)
 
     def buttonHandler(self):
-        print "detectei botao"
+        logger.debug('Button detected!')
         self.toggle()

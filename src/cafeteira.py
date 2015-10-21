@@ -1,11 +1,13 @@
 import time
 
-from machine.machine_manager import MachineManager, MachineStatus
+
 from schedule.schedule_manager import ScheduleManager
+from machine.machine_manager import MachineManager, MachineStatus
 from schedule.schedule_reader import ScheduleReader
 from threading import Thread
 from multiprocessing import Process
 from api.api_manager import ApiManager
+from logger import logger
 
 
 current_action = None
@@ -14,7 +16,6 @@ current_action = None
 class Cafeteira:
 
     def __init__(self):
-        self.schedule = self.setup_schedule()
         self.machine = MachineManager()
         self.machine.listen_button(self.button_callback)
         self.start_api_process()
@@ -24,7 +25,7 @@ class Cafeteira:
         return self.machine.machine_status
 
     def button_callback(self, pin):
-        print "botao acionado"
+        logger.debug('Button panic activaded!')
         if (self.machine.machine_status == MachineStatus.stand_by):
             self.machine.start_coffee_routine()
         else:
@@ -40,24 +41,27 @@ class Cafeteira:
         global current_action
         while (True):
             if (self.schedule.its_time() and current_action is None):
-                print 'Schedule time is ok'
+                logger.debug('Schedule time is Ok!')
                 self.start_coffee_routine_async()
             time.sleep(30)
 
     def start_api_process(self):
+        logger.debug('Create process for API')
         self.api = ApiManager(self)
         self.api.start()
         thread_api = Process(target=self.api.start)
         thread_api.start()
 
     def start_schedule_process(self):
+        logger.debug('Create process for ScheduleReader')
+        self.schedule = self.setup_schedule()
         thread_reading_schedule = Process(target=self.check_schedule_are_ok)
         thread_reading_schedule.start()
 
     def start_coffee_routine_async(self):
         global current_action
         if current_action is None:
-            print "Create thread for coffee"
+            logger.debug('Create thread for coffee')
             thread_making_coffee = Thread(
                 target=self.machine.start_coffee_routine
             )
