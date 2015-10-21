@@ -19,7 +19,7 @@ def task_run_coffee():
 def task_check_coverage():
     return {'actions':
             ['coverage run --source=src unit_tests/run_all_unit_tests.py',
-             'coverage report -m --fail-under=51'],
+             'coverage report -m --fail-under=60'],
             'verbosity': 2
             }
 
