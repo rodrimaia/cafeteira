@@ -12,7 +12,7 @@ class ApiManagerTest(unittest.TestCase):
         self.coffee_file.get_machine_status = MagicMock(
             return_value=MachineStatus.stand_by)
         self.coffee_file.get_schedule_times = MagicMock(
-            return_value=['09:00', '10:20'])
+            return_value=['09:00'])
         self.coffee_file.start_coffee_routine_async = MagicMock()
         self.target = ApiManager(self.coffee_file).api_flask.test_client(self)
 
@@ -28,7 +28,7 @@ class ApiManagerTest(unittest.TestCase):
     def test_api_should_return_schedule_times(self):
         result = self.target.get('/calendario')
         expected = json.dumps(
-            {'times': ['09:00', '10:20']}, indent=2,  separators=(',', ': '))
+            {'times': ['09:00']}, indent=2,  separators=(',', ': '))
         self.assertEqual(result.data, expected)
 
     def test_api_should_start_make_coffee(self):
