@@ -14,6 +14,11 @@ def get_status():
     return jsonify(status=coffee_app.get_machine_status().name)
 
 
+@api_flask.route("/calendario", methods=['GET'])
+def get_times():
+    return jsonify(times=coffee_app.get_schedule_times())
+
+
 @api_flask.route("/cafe", methods=['POST'])
 def post_start_machine():
     coffee_app.start_coffee_routine_async()
