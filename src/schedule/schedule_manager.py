@@ -1,6 +1,7 @@
 from datetime import datetime
 from logger import logger
 
+
 class ScheduleManager():
 
     def __init__(self, scheduled_times):
