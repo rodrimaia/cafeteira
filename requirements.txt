@@ -1,6 +1,7 @@
 schedule
 twython
 nose
+gpiocrust
 nose-watch
 coverage
 requests
@@ -10,4 +11,3 @@ mock==1.0.1
 freezegun
 enum34
 flake8
-https://github.com/rodrigomaia17/gpiocrust/archive/master.zip
