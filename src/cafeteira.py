@@ -16,7 +16,8 @@ current_action = None
 class Cafeteira:
 
     def __init__(self):
-        self.schedule = self.setup_schedule()
+        self.scheduled_times = self.setup_schedule()
+        self.schedule = ScheduleManager(self.scheduled_times)
         self.machine = MachineManager()
         self.machine.listen_button(self.button_callback)
         self.start_api_process()
@@ -24,6 +25,9 @@ class Cafeteira:
 
     def get_machine_status(self):
         return self.machine.machine_status
+
+    def get_schedule_times(self):
+        return self.scheduled_times
 
     def button_callback(self, pin):
         logger.debug('Button panic activaded!')
@@ -36,7 +40,7 @@ class Cafeteira:
         FILE_PATH = 'schedule_coffee.txt'
         reader = ScheduleReader(FILE_PATH)
         times = reader.read_scheduled_times()
-        return ScheduleManager(times)
+        return times
 
     def check_schedule_are_ok(self):
         global current_action
