@@ -16,6 +16,7 @@ current_action = None
 class Cafeteira:
 
     def __init__(self):
+        self.schedule = self.setup_schedule()
         self.machine = MachineManager()
         self.machine.listen_button(self.button_callback)
         self.start_api_process()
@@ -53,8 +54,7 @@ class Cafeteira:
         thread_api.start()
 
     def start_schedule_process(self):
-        logger.debug('Create process for ScheduleReader')
-        self.schedule = self.setup_schedule()
+        logger.debug('Create process for Schedule Reader')
         thread_reading_schedule = Process(target=self.check_schedule_are_ok)
         thread_reading_schedule.start()
 
