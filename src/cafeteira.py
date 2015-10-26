@@ -5,7 +5,6 @@ from schedule.schedule_manager import ScheduleManager
 from machine.machine_manager import MachineManager, MachineStatus
 from schedule.schedule_reader import ScheduleReader
 from threading import Thread
-from multiprocessing import Process
 from api.api_manager import ApiManager
 from logger import logger
 
