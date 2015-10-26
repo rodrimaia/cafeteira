@@ -1,11 +1,10 @@
 import time
-
+import status_app as status
 
 from schedule.schedule_manager import ScheduleManager
 from machine.machine_manager import MachineManager, MachineStatus
 from schedule.schedule_reader import ScheduleReader
 from threading import Thread
-from multiprocessing import Process
 from api.api_manager import ApiManager
 from logger import logger
 
@@ -20,8 +19,8 @@ class Cafeteira:
         self.schedule = ScheduleManager(self.scheduled_times)
         self.machine = MachineManager()
         self.machine.listen_button(self.button_callback)
-        self.start_api_process()
         self.start_schedule_process()
+        self.start_api_process()
 
     def get_machine_status(self):
         return self.machine.machine_status
@@ -43,9 +42,8 @@ class Cafeteira:
         return times
 
     def check_schedule_are_ok(self):
-        global current_action
         while (True):
-            if (self.schedule.its_time() and current_action is None):
+            if (self.schedule.its_time() and status.current_action is None):
                 logger.debug('Schedule time is Ok!')
                 self.start_coffee_routine_async()
             time.sleep(30)
@@ -54,20 +52,19 @@ class Cafeteira:
         logger.debug('Create process for API')
         self.api = ApiManager(self)
         self.api.start()
-        thread_api = Process(target=self.api.start)
+        thread_api = Thread(target=self.api.start)
         thread_api.start()
 
     def start_schedule_process(self):
         logger.debug('Create process for Schedule Reader')
-        thread_reading_schedule = Process(target=self.check_schedule_are_ok)
+        thread_reading_schedule = Thread(target=self.check_schedule_are_ok)
         thread_reading_schedule.start()
 
     def start_coffee_routine_async(self):
-        global current_action
-        if current_action is None:
+        if status.current_action is None:
             logger.debug('Create thread for coffee')
             thread_making_coffee = Thread(
                 target=self.machine.start_coffee_routine
             )
             thread_making_coffee.start()
-            current_action = thread_making_coffee
+            status.current_action = thread_making_coffee
