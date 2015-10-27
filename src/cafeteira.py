@@ -1,5 +1,4 @@
 import time
-import status_app as status
 
 from schedule.schedule_manager import ScheduleManager
 from machine.machine_manager import MachineManager, MachineStatus
@@ -30,10 +29,10 @@ class Cafeteira:
 
     def button_callback(self, pin):
         logger.debug('Button panic activaded!')
-        if (self.machine.machine_status == MachineStatus.stand_by):
+        if (self.machine.machine_status is MachineStatus.stand_by):
             self.machine.start_coffee_routine()
         else:
-            self.machine.interrupt()
+            self.machine.go_back_stand_by()
 
     def setup_schedule(self):
         FILE_PATH = 'schedule_coffee.txt'
@@ -43,7 +42,8 @@ class Cafeteira:
 
     def check_schedule_are_ok(self):
         while (True):
-            if (self.schedule.its_time() and status.current_action is None):
+            if (self.schedule.its_time() and
+                    self.machine.machine_status is MachineStatus.stand_by):
                 logger.debug('Schedule time is Ok!')
                 self.start_coffee_routine_async()
             time.sleep(30)
@@ -61,10 +61,9 @@ class Cafeteira:
         thread_reading_schedule.start()
 
     def start_coffee_routine_async(self):
-        if status.current_action is None:
+        if (self.machine.machine_status is MachineStatus.stand_by):
             logger.debug('Create thread for coffee')
             thread_making_coffee = Thread(
                 target=self.machine.start_coffee_routine
             )
             thread_making_coffee.start()
-            status.current_action = thread_making_coffee
