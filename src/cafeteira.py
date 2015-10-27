@@ -30,7 +30,7 @@ class Cafeteira:
     def button_callback(self, pin):
         logger.debug('Button panic activaded!')
         if (self.machine.machine_status is MachineStatus.stand_by):
-            self.machine.start_coffee_routine()
+            self.start_coffee_routine_async()
         else:
             self.machine.go_back_stand_by()
 
