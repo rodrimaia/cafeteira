@@ -23,25 +23,66 @@ class MachineManagerTest(unittest.TestCase):
         self.assertTrue(self.target.keep_coffee_hot.called)
         self.assertTrue(self.target.go_back_stand_by.called)
 
-    def test_machine_should_make_coffee(self):
+    def test_machine_should_not_make_coffee_when_machine_st_warming(self):
+        self.target.machine_status = MachineStatus.warming_coffee
         self.target.make_coffee()
-        self.assertEquals(self.target.machine_status,
-                          MachineStatus.making_coffee)
+        self.assertNotEquals(
+            self.target.machine_status, MachineStatus.making_coffee
+            )
+        self.assertFalse(self.adapter_start_mock.called)
+        self.assertNotEquals(MachineManager.wait_one_minute.call_count, 30)
+
+    def test_machine_should_no_make_coffee_when_machine_st_making_coffee(self):
+        self.target.machine_status = MachineStatus.warming_coffee
+        self.target.make_coffee()
+        self.assertNotEquals(
+            self.target.machine_status, MachineStatus.making_coffee
+            )
+        self.assertFalse(self.adapter_start_mock.called)
+        self.assertNotEquals(MachineManager.wait_one_minute.call_count, 30)
+
+    def test_machine_should_make_coffee(self):
+        self.target.machine_status = MachineStatus.stand_by
+        self.target.make_coffee()
+        self.assertEquals(
+            self.target.machine_status, MachineStatus.making_coffee
+            )
         self.assertTrue(self.adapter_start_mock.called)
         self.assertEquals(MachineManager.wait_one_minute.call_count, 30)
 
     def test_machine_should_keep_coffee_hot(self):
+        self.target.machine_status = MachineStatus.making_coffee
         self.target.keep_coffee_hot()
-        self.assertEquals(self.target.machine_status,
-                          MachineStatus.warming_coffee)
+        self.assertEquals(
+            self.target.machine_status, MachineStatus.warming_coffee
+            )
         self.assertEquals(self.adapter_stop_mock.call_count, 30)
         self.assertEquals(self.adapter_start_mock.call_count, 30)
         self.assertEquals(MachineManager.wait_one_minute.call_count, 60)
 
+    def test_machine_should_not_keep_coffee_hot_when_machine_st_stand_by(self):
+        self.target.machine_status = MachineStatus.stand_by
+        self.target.keep_coffee_hot()
+        self.assertNotEquals(
+            self.target.machine_status, MachineStatus.warming_coffee
+            )
+        self.assertNotEquals(self.adapter_stop_mock.call_count, 30)
+        self.assertNotEquals(self.adapter_start_mock.call_count, 30)
+        self.assertNotEquals(MachineManager.wait_one_minute.call_count, 60)
+
+    def test_machine_should_not_keep_coffee_hot_when_machine_st_warming(self):
+        self.target.machine_status = MachineStatus.warming_coffee
+        self.target.keep_coffee_hot()
+        self.assertNotEquals(self.adapter_stop_mock.call_count, 30)
+        self.assertNotEquals(self.adapter_start_mock.call_count, 30)
+        self.assertNotEquals(MachineManager.wait_one_minute.call_count, 60)
+
     def test_machine_should_set_machine_standby_when_making_coffee(self):
         self.target.machine_status = MachineStatus.making_coffee
         self.target.go_back_stand_by()
-        self.assertEquals(self.target.machine_status, MachineStatus.stand_by)
+        self.assertEquals(
+            self.target.machine_status, MachineStatus.stand_by
+            )
         self.assertEquals(self.adapter_stop_mock.call_count, 1)
 
     def test_machine_should_set_machine_standby_when_warming_coffee(self):
@@ -49,21 +90,3 @@ class MachineManagerTest(unittest.TestCase):
         self.target.go_back_stand_by()
         self.assertEquals(self.target.machine_status, MachineStatus.stand_by)
         self.assertEquals(self.adapter_stop_mock.call_count, 1)
-
-    def test_machine_interrupt_should_stop_making_coffee(self):
-        self.target.make_coffee()
-        self.target.interrupt_machine()
-        self.assertEquals(self.target.machine_status, MachineStatus.stand_by)
-        self.assertTrue(self.adapter_stop_mock.called)
-
-    def test_machine_interrupt_should_stop_keeping_coffee_hot(self):
-        self.target.keep_coffee_hot()
-        self.target.interrupt_machine()
-        self.assertEquals(self.target.machine_status, MachineStatus.stand_by)
-        self.assertTrue(self.adapter_stop_mock.called)
-
-    def test_machine_interrupt_should_start_machine_if_it_is_in_stand_by(self):
-        self.target.start_coffee_routine = Mock(
-            wraps=self.target.start_coffee_routine)
-        self.target.interrupt_machine()
-        self.assertTrue(self.target.start_coffee_routine.called)

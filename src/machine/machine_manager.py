@@ -26,31 +26,37 @@ class MachineManager:
         self.go_back_stand_by()
 
     def make_coffee(self):
-        logger.debug('Start make coffee')
-        self.machine_adapter.start()
-        self.machine_status = MachineStatus.making_coffee
-        for _ in range(self.MAKE_COFFEE_TIME):
-            self.wait_one_minute()
+        if(self.machine_status is MachineStatus.stand_by):
+            logger.debug('Start make coffee')
+            self.machine_adapter.start()
+            self.machine_status = MachineStatus.making_coffee
+            count = 0
+            while(count < self.MAKE_COFFEE_TIME and
+                    self.machine_status is MachineStatus.making_coffee):
+                self.wait_one_minute()
+                count += 1
+        else:
+            logger.debug('Status initial is not expected to make coffee')
 
     def keep_coffee_hot(self):
-        logger.debug('Keep coffee hot for 60 minuts')
-        self.machine_status = MachineStatus.warming_coffee
-        for _ in range(self.WARM_COFFEE_TIME):
-            self.machine_adapter.stop()
-            self.wait_one_minute()
-            self.machine_adapter.start()
-            self.wait_one_minute()
+        if(self.machine_status is MachineStatus.making_coffee):
+            logger.debug('Keep coffee hot for 60 minuts')
+            self.machine_status = MachineStatus.warming_coffee
+            count = 0
+            while(count < self.WARM_COFFEE_TIME
+                    and self.machine_status is MachineStatus.warming_coffee):
+                self.machine_adapter.stop()
+                self.wait_one_minute()
+                self.machine_adapter.start()
+                self.wait_one_minute()
+                count += 1
+        else:
+            logger.debug('Status initial is not expected to keep coffee hot')
 
     def go_back_stand_by(self):
         logger.debug('Send coffee machine to stand by mod')
         self.machine_status = MachineStatus.stand_by
         self.machine_adapter.stop()
-
-    def interrupt_machine(self):
-        if(self.machine_status != MachineStatus.stand_by):
-            self.go_back_stand_by()
-        else:
-            self.start_coffee_routine()
 
     def listen_button(self, button_callback):
         logger.debug('Listen button')

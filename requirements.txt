@@ -1,9 +1,9 @@
 schedule
 twython
 nose
+gpiocrust
 nose-watch
 coverage
-gpiocrust
 requests
 flask
 doit
