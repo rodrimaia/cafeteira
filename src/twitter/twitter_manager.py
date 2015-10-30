@@ -1,6 +1,7 @@
 import twitter_messages as messages
 
 
+from logger import logger
 from datetime import datetime
 from twython import Twython
 from twitter_credentials import keys
@@ -22,8 +23,10 @@ class TwitterManager(object):
 
     def update_status(self, message):
         twitter = TwitterWrapper()
+        logger.debug('called post message')
+        logger.debug(message)
         twitter.update_status(
-            status=self.message
+            status=message
         )
 
     def transform_message(self, message):
@@ -31,11 +34,13 @@ class TwitterManager(object):
         return message % (now.hour, now.minute)
 
     def tweet_turn_on_machine(self):
+        logger.debug('call tweet turn on machine')
         self.update_status(
             self.transform_message(messages.msg_making)
         )
 
     def tweet_turn_off_machine(self):
+        logger.debug('call tweet turn off machine')
         self.update_status(
             self.transform_message(messages.msg_abort)
         )
