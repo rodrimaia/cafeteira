@@ -1,5 +1,6 @@
 import time
 
+from twitter.twitter_manager import TwitterManager
 from schedule.schedule_manager import ScheduleManager
 from machine.machine_manager import MachineManager, MachineStatus
 from schedule.schedule_reader import ScheduleReader
@@ -8,12 +9,10 @@ from api.api_manager import ApiManager
 from logger import logger
 
 
-current_action = None
-
-
 class Cafeteira:
 
     def __init__(self):
+        self.twitter = TwitterManager()
         self.scheduled_times = self.setup_schedule()
         self.schedule = ScheduleManager(self.scheduled_times)
         self.machine = MachineManager()
@@ -32,6 +31,7 @@ class Cafeteira:
         if (self.machine.machine_status is MachineStatus.stand_by):
             self.start_coffee_routine_async()
         else:
+            self.twitter.tweet_turn_off_machine()
             self.machine.go_back_stand_by()
 
     def setup_schedule(self):
@@ -63,6 +63,7 @@ class Cafeteira:
     def start_coffee_routine_async(self):
         if (self.machine.machine_status is MachineStatus.stand_by):
             logger.debug('Create thread for coffee')
+            self.twitter.tweet_turn_on_machine()
             thread_making_coffee = Thread(
                 target=self.machine.start_coffee_routine
             )
